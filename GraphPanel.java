@@ -1,6 +1,8 @@
 package current;
 
 import java.awt.BasicStroke;
+import java.util.Observable;
+import java.util.Observer;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -8,7 +10,7 @@ import java.awt.Rectangle;
 
 import javax.swing.JPanel;
 
-public class GraphPanel extends JPanel {
+public class GraphPanel extends JPanel implements Observer {
 	
 	/*CONSTRUCTOR, WITH theModel AS ARGUMENT SO THAT WE CAN ACCESS THE ARRAYLISTS vertexList AND graphList.
 	 */
@@ -17,7 +19,18 @@ public class GraphPanel extends JPanel {
 	public GraphPanel(GraphModel theModel){
 		super();
 		setBackground(Color.LIGHT_GRAY);
+		
+		/* include the model so we can access it, and make it an observer
+		 */
 		this.theModel = theModel;
+		theModel.addObserver(this);
+	}
+	
+	
+	/*update method to implement observable
+	 */
+	public void update(Observable obj, Object arg ){
+		System.out.println("graphpanel getting updated.");
 	}
 	
 	public void paintComponent(Graphics g){

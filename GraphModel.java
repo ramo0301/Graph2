@@ -1,8 +1,9 @@
 package current;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class GraphModel {
+public class GraphModel extends Observable {
 	
 	private ArrayList<GraphVertex> vertexList = new ArrayList<GraphVertex>();
 	private ArrayList<GraphEdge> edgeList = new ArrayList<GraphEdge>();
@@ -23,6 +24,8 @@ public class GraphModel {
 	
 	public void addVertex(int width, int height){
 		vertexList.add(new GraphVertex(width, height));
+		setChanged();
+		notifyObservers();
 	}
 	
 	public void addVertex(int x, int y, int width, int height){
