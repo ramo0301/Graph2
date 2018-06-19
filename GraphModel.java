@@ -1,5 +1,9 @@
 package current;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -70,6 +74,22 @@ public class GraphModel extends Observable {
 	
 	public ArrayList<GraphEdge> getEdgeList(){
 		return edgeList;
+	}
+	
+	
+	public void drawAllVertices(Graphics g){
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setStroke(new BasicStroke(3));
+		
+		for(GraphVertex vertex : vertexList){
+			int x = (int)vertex.getX(), y = (int)vertex.getY(), width = (int)vertex.getWidth(), height = (int)vertex.getHeight();
+			String name = vertex.getName();
+			g.setColor(Color.WHITE);
+			g.fillRect(x, y, width, height);
+			g.setColor(Color.BLACK);
+			g.drawRect(x, y, width, height);
+			g.drawString(name, x+width/2-3*name.length(), y+height/2-3);
+		}
 	}
 	
 	/*THE NEXT LINES ARE TO CHECK IF THE VERTEX LIST AND EDGE LIST ARE INITIALIZED CORRECTLY

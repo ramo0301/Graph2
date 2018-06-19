@@ -35,12 +35,11 @@ public class GraphPanel extends JPanel implements Observer {
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setStroke(new BasicStroke(3));
 		
 		
+		theModel.drawAllVertices(g);
 		/* DRAW VERTICES
-		 */
+		 
 		for(Rectangle rect : theModel.getVertexList()){
 			int x = (int)rect.getX(), y = (int)rect.getY(), width = (int)rect.getWidth(), height = (int)rect.getHeight();
 			g.setColor(Color.WHITE);
@@ -48,5 +47,6 @@ public class GraphPanel extends JPanel implements Observer {
 			g.setColor(Color.BLACK);
 			g.drawRect(x, y, width, height);
 		}
+		*/
 	}
 }

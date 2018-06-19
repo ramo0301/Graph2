@@ -8,7 +8,7 @@ public class GraphVertex extends Rectangle{
 	public static final int DEFAULT_REC_WIDTH = 300;
 	public static final int DEFAULT_REC_HEIGHT = 200;
 	
-	private String name = "default name";
+	private String name = "default name extra     letters";
 	
 	
 	/*FIVE DIFFERENT CONSTRUCTORS, EACH WITH DIFFERENT PARAMETERS
