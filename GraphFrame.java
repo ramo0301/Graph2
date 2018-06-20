@@ -84,9 +84,10 @@ public class GraphFrame extends JFrame {
 		}
 		
 		
+		/* ADDS A VERTEX TO THE MODEL,
+		 */
 		public void actionPerformed(ActionEvent e) {
 			theModel.addVertex(x,y);
-			thePanel.repaint();
 			
 		}
 	}
