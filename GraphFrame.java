@@ -69,26 +69,16 @@ public class GraphFrame extends JFrame {
 	}
 	
 	private class AddVertexAction extends AbstractAction {
-		/* DEFAULT X AND Y VALUES
-		 */
-		int x=300, y=200;
 		
-		/* TWO CONSTRUCTORS
-		 */
+		// DEFAULT CONSTRUCTOR
 		public AddVertexAction(){
 			super("Add Vertex");
-		}
-		
-		public AddVertexAction(int inputX, int inputY){
-			super("Add Vertex");
-			x = inputX;
-			y = inputY;
 		}
 		
 		/* ADDS A VERTEX TO THE MODEL,
 		 */
 		public void actionPerformed(ActionEvent e) {
-			theModel.addVertex(x,y);
+			theModel.addVertex();
 		}
 	}
 	

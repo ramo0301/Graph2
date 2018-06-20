@@ -40,15 +40,9 @@ public class SelectionController extends Observable implements MouseListener{
 					thePanel.setDrawingEdge(true);
 					setChanged();
 					notifyObservers();
+					setting = "no action";
 				}
 			}
-		
-			
-			
-			//System.out.println("CLICKED VERTEX " + vertexIndex);
-			//theModel.setSelectedVertexIndex(vertexIndex);
-			//setChanged();
-			//notifyObservers();
 		}
 	}
 	/*
