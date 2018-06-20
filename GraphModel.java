@@ -133,7 +133,7 @@ public class GraphModel extends Observable {
 	
 	
 	/* METHOD THAT DRAWS ALL EDGES
-
+	 */
 	public void drawAllEdges(Graphics g){
 		
 		for(GraphEdge edge : edgeList){
@@ -153,8 +153,6 @@ public class GraphModel extends Observable {
 		
 		g.drawLine(x1, y1, x2, y2);
 	}
-	
-	*/
 	
 	
 	/* METHOD THAT GOES THROUGH THE LIST OF VERTICES TO SEE WHETER ANY OF THEM 

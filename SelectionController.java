@@ -35,6 +35,8 @@ public class SelectionController extends Observable implements MouseListener{
 					vertex2 = theModel.getVertexAtIndex(vertexIndex);
 					System.out.println("AND VERTEX " + vertex2);
 					//now both vertex 1 and 2 are set, so we can draw the edge.
+					theModel.addEdge(vertex1, vertex2);
+					vertex1 = null; vertex2 = null;
 					thePanel.setDrawingEdge(true);
 					setChanged();
 					notifyObservers();
@@ -49,7 +51,7 @@ public class SelectionController extends Observable implements MouseListener{
 			//notifyObservers();
 		}
 	}
-	
+	/*
 	public void drawEdge(Graphics g){
 		System.out.println("AT START OF DRAWEDGE");
 		
@@ -64,8 +66,10 @@ public class SelectionController extends Observable implements MouseListener{
 		
 		System.out.println("Drawing line between " +x1 +","+y2 + " and " +x2 +","+y2);
 		g.drawLine(x1, y1, x2, y2);
+		//setChanged();
+		//notifyObservers("null");
 	}
-
+	*/
 	public void mouseEntered(MouseEvent e){
 		System.out.println("Mouse entered at " + e.getX() + "," + e.getY());
 

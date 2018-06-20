@@ -59,8 +59,8 @@ public class GraphPanel extends JPanel implements Observer {
 	 * (I.E. A NEW VERTEX HAS BEEN ADDED TO THE MODEL), THAT THE CHANGES SHOW IN THE PANEL.
 	 */
 	public void update(Observable obj, Object arg ){
-		if(arg == "Drawing Edge"){
-			System.out.println("theoretically drawing edge");
+		if(arg == "Drawing Edgee"){
+			System.out.println("theoretically drawing edge " + arg);
 			setDrawingEdge(false);
 		}
 		System.out.println("graphpanel getting updated.");
@@ -72,11 +72,10 @@ public class GraphPanel extends JPanel implements Observer {
 		
 		theModel.drawAllVertices(g);
 		
-		if(drawingEdge){
-			System.out.println("theoretically drawing edge");
-			setDrawingEdge(false);
-			mouse.drawEdge(g);
-		}
+		System.out.println("Drawing all edges");
+		theModel.drawAllEdges(g);
+		setDrawingEdge(false);
+
 		//
 		
 		/* DRAW VERTICES
