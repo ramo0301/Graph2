@@ -1,6 +1,6 @@
 package current;
 
-//VERSION 09
+//VERSION 10
 
 public class GraphEditor {
 

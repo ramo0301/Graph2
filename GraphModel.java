@@ -11,9 +11,22 @@ public class GraphModel extends Observable {
 	
 	private ArrayList<GraphVertex> vertexList = new ArrayList<GraphVertex>();
 	private ArrayList<GraphEdge> edgeList = new ArrayList<GraphEdge>();
+	
+	private int selectedVertexIndex = -1;		//-1 means: still uninitialized
 
 	//EMPTY CONSTRUCTOR GRAPHMODEL
 	public GraphModel(){ }
+	
+	
+	/* SETTER AND GETTER FOR SelectedVertexIndex
+	 */
+	public int getSelectedVertexIndex() {
+		return selectedVertexIndex;
+	}
+
+	public void setSelectedVertexIndex(int selectedVertexIndex) {
+		this.selectedVertexIndex = selectedVertexIndex;
+	}
 	
 	
 	/*FIVE DIFFERENT METHODS ADDVERTEX, WE USE NUMBER 3.
@@ -87,6 +100,8 @@ public class GraphModel extends Observable {
 	}
 	
 	
+	/* METHODS TO DRAW ALL VERTICES, OR ALL EDGES. INPUT TO PaintComponent IN THE PANEL.
+	 */
 	public void drawAllVertices(Graphics g){
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(3));
@@ -94,11 +109,27 @@ public class GraphModel extends Observable {
 		for(GraphVertex vertex : vertexList){
 			int x = (int)vertex.getX(), y = (int)vertex.getY(), width = (int)vertex.getWidth(), height = (int)vertex.getHeight();
 			String name = vertex.getName();
-			g.setColor(Color.WHITE);
+			Color fillColor = Color.WHITE, borderColor = Color.BLACK;	//set default colors, writing is also in border color
+			
+			if(vertexList.indexOf(vertex) == selectedVertexIndex){
+				fillColor = Color.GREEN;
+				borderColor = Color.DARK_GRAY;
+			}
+			g.setColor(fillColor);
 			g.fillRect(x, y, width, height);
-			g.setColor(Color.BLACK);
+			g.setColor(borderColor);
 			g.drawRect(x, y, width, height);
 			g.drawString(name, x+width/2-3*name.length(), y+height/2+3);
+		}
+	}
+	
+	
+	/* METHOD THAT DRAWS ALL EDGES
+	 */
+	public void drawAllEdges(Graphics g){
+		
+		for(GraphEdge edge : edgeList){
+			drawLine(g, edge.getConnected1(), edge.getConnected2());
 		}
 	}
 	
@@ -115,12 +146,19 @@ public class GraphModel extends Observable {
 		g.drawLine(x1, y1, x2, y2);
 	}
 	
-	public void drawAllEdges(Graphics g){
-		
-		for(GraphEdge edge : edgeList){
-			drawLine(g, edge.getConnected1(), edge.getConnected2());
+	
+	/* METHOD THAT GOES THROUGH THE LIST OF VERTICES TO SEE WHETER ANY OF THEM 
+	 * CONTAIN THE POINT X,Y. IF ONE DOES, IT RETURNS THE INDEX OF THAT VERTEX. OTHERWISE IT RETURNS -1
+	 */
+	public int vertexThatContainsPoint(int x, int y){
+		for(GraphVertex vertex : vertexList){
+			if(vertex.contains(x, y)){
+				return vertexList.indexOf(vertex);
+			}
 		}
+		return -1;		//returned if none of the vertices contain the point
 	}
+	
 	
 	/*THE NEXT LINES ARE TO CHECK IF THE VERTEX LIST AND EDGE LIST ARE INITIALIZED CORRECTLY
 	 * 

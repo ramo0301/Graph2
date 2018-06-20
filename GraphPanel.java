@@ -25,7 +25,7 @@ public class GraphPanel extends JPanel implements Observer {
 		this.theModel = theModel;
 		theModel.addObserver(this);
 		
-		SelectionController mouse = new SelectionController(this);
+		SelectionController mouse = new SelectionController(this, theModel);
 	}
 	
 	public void setModel(GraphModel inputModel){
