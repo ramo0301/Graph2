@@ -50,6 +50,11 @@ public class GraphPanel extends JPanel implements Observer {
 	 */
 	public void update(Observable obj, Object arg ){
 		System.out.println("UPDATING GRAPH PANEL");
+		System.out.println(arg);
+		if(arg.equals("dragging")){
+			GraphVertex selectedVertex = theModel.getVertexAtIndex(theModel.getSelectedVertexIndex());
+			System.out.println("Selected vertex coordinates: " + selectedVertex.getX() + "," + selectedVertex.getY());
+		}
 		repaint();
 	}
 	

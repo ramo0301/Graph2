@@ -8,8 +8,9 @@ import java.util.Observable;
 public class SelectionController extends Observable implements MouseListener, MouseMotionListener{
 	private GraphPanel thePanel = null;
 	private GraphModel theModel = null;		//might want to get rid of this, if possible elegantly/
-	private GraphVertex vertex1 = null, vertex2 = null;
+	private GraphVertex vertex1 = null, vertex2 = null, vertexBeingDragged = null;
 	private String setting = "default";
+	int x, y;
 	
 	
 	/* CONSTRUCTOR, SETS THE PANEL AND THE MODEL. 
@@ -35,7 +36,7 @@ public class SelectionController extends Observable implements MouseListener, Mo
 
 		if(vertexIndex != -1 ){			//if a vertex contains the point
 			theModel.setSelectedVertexIndex(vertexIndex);
-			if(setting == "edge"){
+			if(setting.equals("edge")){
 				if(vertex1 == null){
 					vertex1 = theModel.getVertexAtIndex(vertexIndex);
 					System.out.println("DRAWING LINE BETWEEN VERTEX " + vertex1);
@@ -50,7 +51,7 @@ public class SelectionController extends Observable implements MouseListener, Mo
 				}
 			}
 			setChanged();
-			notifyObservers();
+			notifyObservers("draw line");
 		}
 	}
 	/*
@@ -88,10 +89,11 @@ public class SelectionController extends Observable implements MouseListener, Mo
 		int vertexIndex = theModel.vertexThatContainsPoint(e.getX(),e.getY());
 
 		if(vertexIndex != -1 ){			//if a vertex contains the point
+			setSetting("dragging");
 			theModel.setSelectedVertexIndex(vertexIndex);
-			System.out.println("You selected the Vertex with index " + vertexIndex);
+			vertexBeingDragged = theModel.getVertexAtIndex(vertexIndex);
 			setChanged();
-			notifyObservers();
+			notifyObservers("mouse pressed");
 		}
 
 	}
@@ -103,8 +105,12 @@ public class SelectionController extends Observable implements MouseListener, Mo
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		System.out.println("Mouse being dragged");
-		
+		if(setting.equals("dragging")){
+			System.out.println("Vertex being dragged");
+			vertexBeingDragged.setLocation(e.getX()+(int)vertexBeingDragged.getX()-x, e.getY()+(int)vertexBeingDragged.getY()-y );
+			setChanged();
+			notifyObservers("dragging");
+		}
 	}
 
 	@Override

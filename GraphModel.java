@@ -52,7 +52,7 @@ public class GraphModel extends Observable {
 		int index = (vertexList.indexOf(null) != -1 ? vertexList.indexOf(null) : vertexList.size());
 		vertexList.add(new GraphVertex(index));
 		setChanged();
-		notifyObservers();
+		notifyObservers("adding vertex");
 	}
 	
 	public void addVertex(String inputName){		//addVertex 2
@@ -83,7 +83,7 @@ public class GraphModel extends Observable {
 	public void addEdge(int connectedVertexIndex1, int  connectedVertexIndex2){
 		edgeList.add(new GraphEdge(vertexList.get(connectedVertexIndex1), vertexList.get(connectedVertexIndex2)));
 		setChanged();
-		notifyObservers();
+		notifyObservers("adding edge");
 	}
 	
 	
