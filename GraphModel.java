@@ -29,6 +29,14 @@ public class GraphModel extends Observable {
 	}
 	
 	
+	public GraphVertex getVertexAtIndex(int index){
+		return vertexList.get(index);
+	}
+	
+	public void setVertexAtIndex(int index, GraphVertex vertex){
+		vertexList.add(index, vertex);
+	}
+	
 	/*FIVE DIFFERENT METHODS ADDVERTEX, WE USE NUMBER 3.
 	 */
 	public void addVertex(){						//addVertex 1
@@ -125,7 +133,7 @@ public class GraphModel extends Observable {
 	
 	
 	/* METHOD THAT DRAWS ALL EDGES
-	 */
+
 	public void drawAllEdges(Graphics g){
 		
 		for(GraphEdge edge : edgeList){
@@ -145,6 +153,8 @@ public class GraphModel extends Observable {
 		
 		g.drawLine(x1, y1, x2, y2);
 	}
+	
+	*/
 	
 	
 	/* METHOD THAT GOES THROUGH THE LIST OF VERTICES TO SEE WHETER ANY OF THEM 

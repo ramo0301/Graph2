@@ -1,5 +1,8 @@
 package current;
 
+import java.awt.BasicStroke;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Observable;
@@ -7,6 +10,7 @@ import java.util.Observable;
 public class SelectionController extends Observable implements MouseListener{
 	private GraphPanel thePanel = null;
 	private GraphModel theModel = null;		//might want to get rid of this, if possible elegantly/
+	private GraphVertex vertex1 = null, vertex2 = null;
 	
 	public SelectionController(GraphPanel inputPanel, GraphModel inputModel){
 		this.thePanel = inputPanel;
@@ -21,11 +25,36 @@ public class SelectionController extends Observable implements MouseListener{
 		int vertexIndex = theModel.vertexThatContainsPoint(e.getX(),e.getY());
 		
 		if(vertexIndex != -1 ){			//if a vertex contains the point
+			if(vertex1 != null){
+				vertex1 = theModel.getVertexAtIndex(vertexIndex);
+			} else {
+				vertex2 = theModel.getVertexAtIndex(vertexIndex);
+				//now both vertex 1 and 2 are set, so we can draw the edge.
+				thePanel.setDrawingEdge(true);
+				setChanged();
+				notifyObservers("");
+
+			}
+			
+			
 			System.out.println("CLICKED VERTEX " + vertexIndex);
 			theModel.setSelectedVertexIndex(vertexIndex);
 			setChanged();
 			notifyObservers();
 		}
+	}
+	
+	public void drawEdge(Graphics g){
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setStroke(new BasicStroke(3));
+		
+		//following lines need to be edited
+		int x1 = (int)vertex1.getX();
+		int y1 = (int)vertex1.getY();
+		int x2 = (int)vertex2.getX();
+		int y2 = (int)vertex2.getY();
+		
+		g.drawLine(x1, y1, x2, y2);
 	}
 
 	public void mouseEntered(MouseEvent e){

@@ -15,6 +15,8 @@ public class GraphPanel extends JPanel implements Observer {
 	/*CONSTRUCTOR, WITH theModel AS ARGUMENT SO THAT WE CAN ACCESS THE ARRAYLISTS vertexList AND graphList.
 	 */
 	private GraphModel theModel = null;
+	private SelectionController mouse = null;
+	boolean drawingEdge = false;
 	
 	public GraphPanel(GraphModel theModel){
 		super();
@@ -25,9 +27,18 @@ public class GraphPanel extends JPanel implements Observer {
 		this.theModel = theModel;
 		theModel.addObserver(this);
 		
-		SelectionController mouse = new SelectionController(this, theModel);
+		mouse = new SelectionController(this, theModel);
+		mouse.addObserver(this);
 	}
 	
+	public boolean isDrawingEdge() {
+		return drawingEdge;
+	}
+
+	public void setDrawingEdge(boolean drawingEdge) {
+		this.drawingEdge = drawingEdge;
+	}
+
 	public void setModel(GraphModel inputModel){
 		// DO NOTHING IF THE MODEL IS ALREADY SET.
 		if(inputModel == theModel)
@@ -42,6 +53,10 @@ public class GraphPanel extends JPanel implements Observer {
 	 * (I.E. A NEW VERTEX HAS BEEN ADDED TO THE MODEL), THAT THE CHANGES SHOW IN THE PANEL.
 	 */
 	public void update(Observable obj, Object arg ){
+		if(arg == "Drawing Edge"){
+			System.out.println("theoretically drawing edge");
+			setDrawingEdge(false);
+		}
 		System.out.println("graphpanel getting updated.");
 		repaint();
 	}
@@ -49,9 +64,15 @@ public class GraphPanel extends JPanel implements Observer {
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		
-		
 		theModel.drawAllVertices(g);
-		theModel.drawAllEdges(g);
+		/*
+		if(drawingEdge){
+			System.out.println("theoretically drawing edge");
+			setDrawingEdge(false);
+		}
+		//mouse.drawEdge(g);
+		 */
+		
 		/* DRAW VERTICES
 		 
 		for(Rectangle rect : theModel.getVertexList()){
