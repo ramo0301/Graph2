@@ -26,9 +26,6 @@ public class GraphPanel extends JPanel implements Observer {
 		 */
 		this.theModel = theModel;
 		theModel.addObserver(this);
-		
-		mouse = new SelectionController(this, theModel);
-		mouse.addObserver(this);
 	}
 	
 	public boolean isDrawingEdge() {
@@ -49,6 +46,15 @@ public class GraphPanel extends JPanel implements Observer {
 	}
 	
 	
+	public SelectionController getMouse() {
+		return mouse;
+	}
+
+	public void setMouse(String setting) {
+		this.mouse = new SelectionController(setting, this, theModel);
+		
+	}
+
 	/* PRINT STATEMENT JUST FOR CHECKING, REPAINT SO THAT WHEN THE OBSERVABLE IS CHANGED,
 	 * (I.E. A NEW VERTEX HAS BEEN ADDED TO THE MODEL), THAT THE CHANGES SHOW IN THE PANEL.
 	 */
@@ -65,13 +71,13 @@ public class GraphPanel extends JPanel implements Observer {
 		super.paintComponent(g);
 		
 		theModel.drawAllVertices(g);
-		/*
+		
 		if(drawingEdge){
 			System.out.println("theoretically drawing edge");
 			setDrawingEdge(false);
+			mouse.drawEdge(g);
 		}
-		//mouse.drawEdge(g);
-		 */
+		//
 		
 		/* DRAW VERTICES
 		 

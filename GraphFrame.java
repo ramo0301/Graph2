@@ -100,7 +100,8 @@ public class GraphFrame extends JFrame {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			theModel.addEdge(0, 1);
+			System.out.println("action performed");
+			thePanel.setMouse("edge");
 		}
 		
 	}
