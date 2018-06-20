@@ -1,8 +1,13 @@
 package current;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class GraphModel {
+public class GraphModel extends Observable {
 	
 	private ArrayList<GraphVertex> vertexList = new ArrayList<GraphVertex>();
 	private ArrayList<GraphEdge> edgeList = new ArrayList<GraphEdge>();
@@ -11,25 +16,35 @@ public class GraphModel {
 	public GraphModel(){ }
 	
 	
-	/*FIVE DIFFERENT METHODS ADDVERTEX, EACH CORRESPONDING TO A DIFFERENT CONSTRUCTOR OF GraphVertex.
+	/*FIVE DIFFERENT METHODS ADDVERTEX, WE USE NUMBER 3.
 	 */
-	public void addVertex(){
+	public void addVertex(){						//addVertex 1
 		vertexList.add(new GraphVertex());
 	}
 	
-	public void addVertex(String inputName){
+	public void addVertex(String inputName){		//addVertex 2
 		vertexList.add(new GraphVertex(inputName));
 	}
 	
-	public void addVertex(int width, int height){
-		vertexList.add(new GraphVertex(width, height));
+	/* ADDS A VERTEX TO THE LIST OF VERTICES, THEN NOTIFIES OBSERVERS 
+	 * (AT THE MOMENT ONLY THE PANEL), WHICH THEN CALL REPAINT.
+	 */
+	public void addVertex(int width, int height){	//addVertex 3
+		/* USE INDEX TO DETERMINE LOCATION, WHICH IS DONE 
+		 * EITHER BY GETTING THE SIZE AND ADDING A NEW ELEMNT TO THE END OF vertexList, 
+		 * OR, IF A VERTEX HAS BEEN DELETED BEFORE, BY GETTING THE INDEX OF THE FIRST FREE SPOT IN THE LIST.
+		 */
+		int index = (vertexList.indexOf(null) != -1 ? vertexList.indexOf(null) : vertexList.size());
+		vertexList.add(new GraphVertex(index));
+		setChanged();
+		notifyObservers();
 	}
 	
-	public void addVertex(int x, int y, int width, int height){
+	public void addVertex(int x, int y, int width, int height){ //addVertex 4
 		vertexList.add(new GraphVertex(x, y, width, height));
 	}
 	
-	public void addVertex(String string, int x, int y){
+	public void addVertex(String string, int x, int y){			//addVertex 5
 		vertexList.add(new GraphVertex(string, x, y));		
 	}
 	
@@ -67,6 +82,22 @@ public class GraphModel {
 	
 	public ArrayList<GraphEdge> getEdgeList(){
 		return edgeList;
+	}
+	
+	
+	public void drawAllVertices(Graphics g){
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setStroke(new BasicStroke(3));
+		
+		for(GraphVertex vertex : vertexList){
+			int x = (int)vertex.getX(), y = (int)vertex.getY(), width = (int)vertex.getWidth(), height = (int)vertex.getHeight();
+			String name = vertex.getName();
+			g.setColor(Color.WHITE);
+			g.fillRect(x, y, width, height);
+			g.setColor(Color.BLACK);
+			g.drawRect(x, y, width, height);
+			g.drawString(name, x+width/2-3*name.length(), y+height/2-3);
+		}
 	}
 	
 	/*THE NEXT LINES ARE TO CHECK IF THE VERTEX LIST AND EDGE LIST ARE INITIALIZED CORRECTLY
