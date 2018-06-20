@@ -1,13 +1,11 @@
 package current;
 
-import java.awt.BasicStroke;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.Observable;
 
-public class SelectionController extends Observable implements MouseListener{
+public class SelectionController extends Observable implements MouseListener, MouseMotionListener{
 	private GraphPanel thePanel = null;
 	private GraphModel theModel = null;		//might want to get rid of this, if possible elegantly/
 	private GraphVertex vertex1 = null, vertex2 = null;
@@ -20,6 +18,7 @@ public class SelectionController extends Observable implements MouseListener{
 		this.thePanel = inputPanel;
 		this.theModel = inputModel;
 		thePanel.addMouseListener(this);
+		thePanel.addMouseMotionListener(this);
 		addObserver(thePanel);
 	}
 	
@@ -85,12 +84,33 @@ public class SelectionController extends Observable implements MouseListener{
 
 	public void mousePressed(MouseEvent e){
 		System.out.println("Mouse pressed at " + e.getX() + "," + e.getY()); 	//just a confirmation print
+		
+		int vertexIndex = theModel.vertexThatContainsPoint(e.getX(),e.getY());
+
+		if(vertexIndex != -1 ){			//if a vertex contains the point
+			theModel.setSelectedVertexIndex(vertexIndex);
+			System.out.println("You selected the Vertex with index " + vertexIndex);
+			setChanged();
+			notifyObservers();
+		}
 
 	}
 
 	public void mouseReleased(MouseEvent e){
 		System.out.println("Mouse released at " + e.getX() + "," + e.getY());	//just a confirmation print
 
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		System.out.println("Mouse being dragged");
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

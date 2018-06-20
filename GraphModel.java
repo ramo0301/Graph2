@@ -165,7 +165,6 @@ public class GraphModel extends Observable {
 	 * CONTAIN THE POINT X,Y. IF ONE DOES, IT RETURNS THE INDEX OF THAT VERTEX. OTHERWISE IT RETURNS -1
 	 */
 	public int vertexThatContainsPoint(int x, int y){
-		System.out.println("vertexcontainsfunctiontest");
 		for(GraphVertex vertex : vertexList){
 			if(vertex.contains(x, y)){
 				return vertexList.indexOf(vertex);
