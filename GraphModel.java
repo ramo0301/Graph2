@@ -96,7 +96,7 @@ public class GraphModel extends Observable {
 			g.fillRect(x, y, width, height);
 			g.setColor(Color.BLACK);
 			g.drawRect(x, y, width, height);
-			g.drawString(name, x+width/2-3*name.length(), y+height/2-3);
+			g.drawString(name, x+width/2-3*name.length(), y+height/2+3);
 		}
 	}
 	
