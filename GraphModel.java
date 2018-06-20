@@ -29,28 +29,39 @@ public class GraphModel extends Observable {
 	}
 	
 	
-	/*FIVE DIFFERENT METHODS ADDVERTEX, WE USE NUMBER 3.
+	public GraphVertex getVertexAtIndex(int index){
+		return vertexList.get(index);
+	}
+	
+	public void setVertexAtIndex(int index, GraphVertex vertex){
+		vertexList.add(index, vertex);
+	}
+	
+	/*FIVE DIFFERENT METHODS ADDVERTEX, WE USE NUMBER 1.
+	 */
+	
+	
+	/* ADDS A VERTEX TO THE LIST OF VERTICES, THEN NOTIFIES OBSERVERS 
+	 * (AT THE MOMENT ONLY THE PANEL), WHICH THEN CALLS REPAINT.
 	 */
 	public void addVertex(){						//addVertex 1
-		vertexList.add(new GraphVertex());
+		/* USE INDEX TO DETERMINE LOCATION, WHICH IS DONE 
+		 * EITHER BY GETTING THE SIZE AND ADDING A NEW ELEMNT TO THE END OF vertexList, 
+		 * OR, IF A VERTEX HAS BEEN DELETED BEFORE, BY GETTING THE INDEX OF THE FIRST FREE SPOT IN THE LIST.
+		 */		
+		int index = (vertexList.indexOf(null) != -1 ? vertexList.indexOf(null) : vertexList.size());
+		vertexList.add(new GraphVertex(index));
+		setChanged();
+		notifyObservers();
 	}
 	
 	public void addVertex(String inputName){		//addVertex 2
 		vertexList.add(new GraphVertex(inputName));
 	}
 	
-	/* ADDS A VERTEX TO THE LIST OF VERTICES, THEN NOTIFIES OBSERVERS 
-	 * (AT THE MOMENT ONLY THE PANEL), WHICH THEN CALL REPAINT.
-	 */
+
 	public void addVertex(int width, int height){	//addVertex 3
-		/* USE INDEX TO DETERMINE LOCATION, WHICH IS DONE 
-		 * EITHER BY GETTING THE SIZE AND ADDING A NEW ELEMNT TO THE END OF vertexList, 
-		 * OR, IF A VERTEX HAS BEEN DELETED BEFORE, BY GETTING THE INDEX OF THE FIRST FREE SPOT IN THE LIST.
-		 */
-		int index = (vertexList.indexOf(null) != -1 ? vertexList.indexOf(null) : vertexList.size());
-		vertexList.add(new GraphVertex(index));
-		setChanged();
-		notifyObservers();
+		vertexList.add(new GraphVertex(width, height));
 	}
 	
 	public void addVertex(int x, int y, int width, int height){ //addVertex 4
@@ -151,6 +162,7 @@ public class GraphModel extends Observable {
 	 * CONTAIN THE POINT X,Y. IF ONE DOES, IT RETURNS THE INDEX OF THAT VERTEX. OTHERWISE IT RETURNS -1
 	 */
 	public int vertexThatContainsPoint(int x, int y){
+		System.out.println("vertexcontainsfunctiontest");
 		for(GraphVertex vertex : vertexList){
 			if(vertex.contains(x, y)){
 				return vertexList.indexOf(vertex);

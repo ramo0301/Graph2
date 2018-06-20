@@ -69,26 +69,16 @@ public class GraphFrame extends JFrame {
 	}
 	
 	private class AddVertexAction extends AbstractAction {
-		/* DEFAULT X AND Y VALUES
-		 */
-		int x=300, y=200;
 		
-		/* TWO CONSTRUCTORS
-		 */
+		// DEFAULT CONSTRUCTOR
 		public AddVertexAction(){
 			super("Add Vertex");
-		}
-		
-		public AddVertexAction(int inputX, int inputY){
-			super("Add Vertex");
-			x = inputX;
-			y = inputY;
 		}
 		
 		/* ADDS A VERTEX TO THE MODEL,
 		 */
 		public void actionPerformed(ActionEvent e) {
-			theModel.addVertex(x,y);
+			theModel.addVertex();
 		}
 	}
 	
@@ -99,8 +89,12 @@ public class GraphFrame extends JFrame {
 			super("Add Edge");
 		}
 		
+		/* SET THE MOUSELISTENERS TO THE SETTING THAT MAKES IT SO THAT
+		 * WHEN THE NEXT TWO VERTICES HAVE BEEN SELECTED, AN EDGE WILL BE DRAWN BETWEEN THEM.
+		 */
 		public void actionPerformed(ActionEvent e) {
-			theModel.addEdge(0, 1);
+			System.out.println("action performed");
+			thePanel.setMouseSetting("edge");
 		}
 		
 	}

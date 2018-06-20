@@ -15,19 +15,22 @@ public class GraphPanel extends JPanel implements Observer {
 	/*CONSTRUCTOR, WITH theModel AS ARGUMENT SO THAT WE CAN ACCESS THE ARRAYLISTS vertexList AND graphList.
 	 */
 	private GraphModel theModel = null;
+	private SelectionController mouse;
 	
 	public GraphPanel(GraphModel theModel){
 		super();
 		setBackground(Color.LIGHT_GRAY);
 		
-		/* include the model so we can access it, and make it an observer
+		/* include the model so we can access it, and make it an observer. Model is also input to mouse.
 		 */
 		this.theModel = theModel;
 		theModel.addObserver(this);
-		
-		SelectionController mouse = new SelectionController(this, theModel);
+		mouse = new SelectionController("default", this, theModel);
 	}
 	
+	
+	/* SETTER FOR MODEL
+	 */
 	public void setModel(GraphModel inputModel){
 		// DO NOTHING IF THE MODEL IS ALREADY SET.
 		if(inputModel == theModel)
@@ -38,20 +41,32 @@ public class GraphPanel extends JPanel implements Observer {
 	}
 	
 	
+	public SelectionController getMouse() {
+		return mouse;
+	}
+
+	public void setMouseSetting(String newSetting) {
+		this.mouse.setSetting(newSetting);
+	}
+
 	/* PRINT STATEMENT JUST FOR CHECKING, REPAINT SO THAT WHEN THE OBSERVABLE IS CHANGED,
-	 * (I.E. A NEW VERTEX HAS BEEN ADDED TO THE MODEL), THAT THE CHANGES SHOW IN THE PANEL.
+	 * (I.E. A NEW VERTEX OR EDGE HAS BEEN ADDED TO THE MODEL), THAT THE CHANGES SHOW IN THE PANEL.
 	 */
 	public void update(Observable obj, Object arg ){
-		System.out.println("graphpanel getting updated.");
+		System.out.println("UPDATING GRAPH PANEL");
 		repaint();
 	}
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		
-		
+		//draw all vertices
 		theModel.drawAllVertices(g);
+		//draw all edges
 		theModel.drawAllEdges(g);
+
+		//
+		
 		/* DRAW VERTICES
 		 
 		for(Rectangle rect : theModel.getVertexList()){
