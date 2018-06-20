@@ -11,14 +11,16 @@ public class SelectionController extends Observable implements MouseListener{
 	private GraphPanel thePanel = null;
 	private GraphModel theModel = null;		//might want to get rid of this, if possible elegantly/
 	private GraphVertex vertex1 = null, vertex2 = null;
-	private String setting = null;
+	private String setting = "default";
 	
-	public SelectionController(String setting, GraphPanel inputPanel, GraphModel inputModel){
+	
+	/* CONSTRUCTOR, SETS THE PANEL AND THE MODEL. 
+	 */
+	public SelectionController( GraphPanel inputPanel, GraphModel inputModel){
 		this.thePanel = inputPanel;
 		this.theModel = inputModel;
 		thePanel.addMouseListener(this);
 		addObserver(thePanel);
-		setSetting(setting);
 	}
 	
 	public void setSetting(String newSetting){

@@ -111,12 +111,15 @@ public class GraphModel extends Observable {
 	}
 	
 	
-	/* METHODS TO DRAW ALL VERTICES, OR ALL EDGES. INPUT TO PaintComponent IN THE PANEL.
+	/* METHOD TO DRAW ALL VERTICES. USED IN PaintComponent OF THE PANEL.
 	 */
 	public void drawAllVertices(Graphics g){
+		
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(3));
 		
+		/* GO THROUGH EVER VERTEX IN THE LIST, GET COORDINATIONS, DIMENSIONS, NAME, AND PRINT IT ALL
+		 */
 		for(GraphVertex vertex : vertexList){
 			int x = (int)vertex.getX(), y = (int)vertex.getY(), width = (int)vertex.getWidth(), height = (int)vertex.getHeight();
 			String name = vertex.getName();
@@ -135,7 +138,7 @@ public class GraphModel extends Observable {
 	}
 	
 	
-	/* METHOD THAT DRAWS ALL EDGES
+	/* METHOD TO DRAW ALL EDGES. USED IN PaintComponent OF THE PANEL.
 	 */
 	public void drawAllEdges(Graphics g){
 		
@@ -172,7 +175,7 @@ public class GraphModel extends Observable {
 	}
 	
 	
-	/*THE NEXT LINES ARE TO CHECK IF THE VERTEX LIST AND EDGE LIST ARE INITIALIZED CORRECTLY
+	/*THE NEXT TWO METHODS ARE TO CHECK IF THE VERTEX LIST AND EDGE LIST ARE INITIALIZED CORRECTLY
 	 * 
 	 * 
 	 * 

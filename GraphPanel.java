@@ -25,7 +25,7 @@ public class GraphPanel extends JPanel implements Observer {
 		 */
 		this.theModel = theModel;
 		theModel.addObserver(this);
-		mouse = new SelectionController("default", this, theModel);
+		mouse = new SelectionController(this, theModel);
 	}
 	
 	
@@ -39,11 +39,7 @@ public class GraphPanel extends JPanel implements Observer {
 		theModel = inputModel;
 		theModel.addObserver(this);
 	}
-	
-	
-	public SelectionController getMouse() {
-		return mouse;
-	}
+
 
 	public void setMouseSetting(String newSetting) {
 		this.mouse.setSetting(newSetting);
@@ -64,18 +60,5 @@ public class GraphPanel extends JPanel implements Observer {
 		theModel.drawAllVertices(g);
 		//draw all edges
 		theModel.drawAllEdges(g);
-
-		//
-		
-		/* DRAW VERTICES
-		 
-		for(Rectangle rect : theModel.getVertexList()){
-			int x = (int)rect.getX(), y = (int)rect.getY(), width = (int)rect.getWidth(), height = (int)rect.getHeight();
-			g.setColor(Color.WHITE);
-			g.fillRect(x, y, width, height);
-			g.setColor(Color.BLACK);
-			g.drawRect(x, y, width, height);
-		}
-		*/
 	}
 }
