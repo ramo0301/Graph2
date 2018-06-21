@@ -22,6 +22,10 @@ public class GraphModel extends Observable {
 		lineToMouse = new EdgeLine(startX, startY, endX, endY);
 	}
 	
+	public void disableLineToMouse(){
+		lineToMouse = null;
+	}
+	
 	public void setLineToMouse(int endX, int endY) {
 		lineToMouse.setCoordinates(endX, endY);
 		setChanged();

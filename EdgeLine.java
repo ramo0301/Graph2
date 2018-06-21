@@ -1,6 +1,8 @@
 package current;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class EdgeLine {
 	int startX=0, startY=0, endX=100, endY=100;
@@ -28,6 +30,9 @@ public class EdgeLine {
 	}
 	
 	public void drawLine(Graphics g){
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setStroke(new BasicStroke(3));
+		
 		g.drawLine(startX, startY, endX, endY);
 	}
 }

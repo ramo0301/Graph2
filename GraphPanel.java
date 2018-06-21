@@ -79,11 +79,12 @@ public class GraphPanel extends JPanel implements ActionListener, Observer {
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		
+		//draw a line to the mouse (only while adding vertex)
+		theModel.drawLine(g);
 		//draw all edges
 		theModel.drawAllEdges(g);
 		//draw all vertices
 		theModel.drawAllVertices(g);
-		theModel.drawLine(g);
 		
 	}
 	

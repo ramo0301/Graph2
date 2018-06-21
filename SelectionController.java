@@ -29,14 +29,15 @@ public class SelectionController extends Observable implements MouseListener, Mo
 		this.setting = newSetting;
 		if(newSetting.equals("edge")){
 			int startX = (int)theModel.getVertexAtIndex(vertexIndex).getX();
-			int startY = (int)
-			theModel.getVertexAtIndex(vertexIndex).getY();
+			int startY = (int)theModel.getVertexAtIndex(vertexIndex).getY();
 			System.out.println("Making line to mouse");
 			theModel.makeLineToMouse(startX, startY, x, y);
 			
 			setEdge();	//if a vertex is already selected, it becomes one of the vertices that the edge connects.
 			setChanged();
 			notifyObservers();
+		} else if(newSetting.equals("default")){
+			theModel.disableLineToMouse();
 		}
 	}
 	public void mouseClicked(MouseEvent e){
@@ -103,9 +104,9 @@ public class SelectionController extends Observable implements MouseListener, Mo
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		//if(setting.equals("edge")){	//if the mode is to draw an edge, call setEdge
-			//theModel.setLineToMouse(e.getX(),e.getY());
-		//}
+		if(setting.equals("edge")){	//if the mode is to draw an edge, call setEdge
+			theModel.setLineToMouse(e.getX(),e.getY());
+		}
 		
 	}
 	
