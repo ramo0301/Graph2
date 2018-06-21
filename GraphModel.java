@@ -46,14 +46,26 @@ public class GraphModel extends Observable {
 	 */
 	public void addVertex(){						//addVertex 1
 		/* USE INDEX TO DETERMINE LOCATION, WHICH IS DONE 
-		 * EITHER BY GETTING THE SIZE AND ADDING A NEW ELEMNT TO THE END OF vertexList, 
+		 * EITHER BY GETTING THE SIZE AND ADDING A NEW ELEMNET TO THE END OF vertexList, 
 		 * OR, IF A VERTEX HAS BEEN DELETED BEFORE, BY GETTING THE INDEX OF THE FIRST FREE SPOT IN THE LIST.
 		 */		
-		int index = (vertexList.indexOf(null) != -1 ? vertexList.indexOf(null) : vertexList.size());
-		vertexList.add(new GraphVertex(index));
+		int index;
+		
+		if(vertexList.indexOf(null) != -1){	//if there is any hole (null element) in the list
+			index = vertexList.indexOf(null);
+			vertexList.add(index, new GraphVertex(index));	//shifts the null element to index+1
+			vertexList.remove(index+1);						//removes the null element
+			
+		} else {
+			index = vertexList.size();		//if there is NO hole (null element) in the list
+			vertexList.add(index, new GraphVertex(index));
+		}
+		
+		System.out.println("INDEX STILL NULL? " + vertexList.get(index));
 		setChanged();
 		notifyObservers();
 	}
+	
 	
 	public void addVertex(String inputName){		//addVertex 2
 		vertexList.add(new GraphVertex(inputName));
