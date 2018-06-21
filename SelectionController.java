@@ -26,9 +26,8 @@ public class SelectionController extends Observable implements MouseListener, Mo
 	public void setSetting(String newSetting){
 		System.out.println("SETTING MOUSE SETTING TO " + newSetting);
 		this.setting = newSetting;
-		if(newSetting.equals("edge")){			//when having to select an edge, we don't
-			vertexIndex = -1;
-			theModel.setSelectedVertexIndex(vertexIndex);
+		if(newSetting.equals("edge")){
+			setEdge();	//if a vertex is already selected, it becomes one of the vertices that the edge connects.
 			setChanged();
 			notifyObservers();
 		}
@@ -99,17 +98,20 @@ public class SelectionController extends Observable implements MouseListener, Mo
 	 *  SELECTS THE NEXT TWO VERTICES TO BE THE END OF THE EDGE, THEN SETS SETTING BACK TO DEFAULT 
 	 */
 	private void setEdge(){
-		if(vertex1 == null){
-			vertex1 = theModel.getVertexAtIndex(vertexIndex);
-		} else {
-			vertex2 = theModel.getVertexAtIndex(vertexIndex);
-			//now both vertex 1 and 2 are set, so we can add the edge.
-			theModel.addEdge(vertex1, vertex2);
-			vertex1 = null; vertex2 = null;
-			setSetting("default");
+		if(vertexIndex != -1){ 			//only do something if a vertex is selected.
+			if(vertex1 == null){		//vertex1 needs yet to be initialized
+				vertex1 = theModel.getVertexAtIndex(vertexIndex);
+			} else {					//vertex1 already initialized
+				vertex2 = theModel.getVertexAtIndex(vertexIndex);
+				//now both vertex 1 and 2 are set, so we can add the edge.
+				theModel.addEdge(vertex1, vertex2);
+				vertex1 = null; vertex2 = null;
+				setSetting("default");
+			} 
 		}
+
 	}
-	
+
 
 
 }
