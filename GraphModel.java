@@ -24,6 +24,8 @@ public class GraphModel extends Observable {
 
 	public void setSelectedVertexIndex(int selectedVertexIndex) {
 		this.selectedVertexIndex = selectedVertexIndex;
+		setChanged();
+		notifyObservers();
 	}
 	
 	

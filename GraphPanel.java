@@ -30,6 +30,7 @@ public class GraphPanel extends JPanel implements ActionListener, Observer {
 		setBackground(Color.LIGHT_GRAY);
 		setLayout(new BorderLayout());
 		
+		//textField added to the bottom, if entered is fired the actionPerformed method at the bottom is called.
 		textField = new JTextField(NUMBER_OF_CHAR);
 		textField.setEditable(false);
 		textField.addActionListener(this);
@@ -100,7 +101,7 @@ public class GraphPanel extends JPanel implements ActionListener, Observer {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		String text = textField.getText();
-		theModel.getVertexAtIndex(theModel.getSelectedVertexIndex()).setName(text);
+		theModel.getVertexAtIndex(theModel.getSelectedVertexIndex()).setName(text); //set the name of the selected vertex
 		repaint();
 		System.out.println(text);
 	}
