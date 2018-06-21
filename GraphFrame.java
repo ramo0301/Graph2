@@ -53,8 +53,7 @@ public class GraphFrame extends JFrame {
 		menuDeleteVertex.setAction(deleteVertex);
 		menuAddEdge.setAction(addEdge);
 		
-		/* RELEVANT PANEL IN THE CENTER, BLANK PANELS AS BORDERS
-		 */
+		// RELEVANT PANEL IN THE CENTER, BLANK PANELS AS BORDERS
 		add(new EmptyPanel() , BorderLayout.NORTH);
 		add(new EmptyPanel() , BorderLayout.SOUTH);
 		add(new EmptyPanel() , BorderLayout.EAST);
@@ -72,24 +71,21 @@ public class GraphFrame extends JFrame {
 		}
 	}
 	
+	
 	private class AddVertexAction extends AbstractAction {
 		
-		// DEFAULT CONSTRUCTOR
 		public AddVertexAction(){
 			super("Add Vertex");
 		}
 		
-		/* ADDS A VERTEX TO THE MODEL,
-		 */
 		public void actionPerformed(ActionEvent e) {
-			theModel.addVertex();
+			theModel.addVertex();		//adds a vertex to the model
 		}
 	}
 	
 	
 	private class DeleteVertexAction extends AbstractAction {
 		
-		//DEFAULT CONSTRUCTOR
 		public DeleteVertexAction(){
 			super("Delete Selected Vertex");
 		}
@@ -104,12 +100,11 @@ public class GraphFrame extends JFrame {
 	
 	private class AddEdgeAction extends AbstractAction {
 		
-		//DEFAULT CONSTRUCTOR
 		public AddEdgeAction(){
 			super("Add Edge");
 		}
 		
-		/* SET THE MOUSELISTENERS TO THE SETTING THAT MAKES IT SO THAT
+		/* SET THE MOUSELISTENER TO THE SETTING THAT MAKES IT SO THAT
 		 * WHEN THE NEXT TWO VERTICES HAVE BEEN SELECTED, AN EDGE WILL BE DRAWN BETWEEN THEM.
 		 */
 		public void actionPerformed(ActionEvent e) {

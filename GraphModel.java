@@ -14,12 +14,7 @@ public class GraphModel extends Observable {
 	
 	private int selectedVertexIndex = -1;		//-1 means: still uninitialized
 
-	//EMPTY CONSTRUCTOR GRAPHMODEL
-	public GraphModel(){ }
 	
-	
-	/* SETTER AND GETTER FOR SelectedVertexIndex
-	 */
 	public int getSelectedVertexIndex() {
 		return selectedVertexIndex;
 	}
@@ -46,19 +41,19 @@ public class GraphModel extends Observable {
 	 */
 	public void addVertex(){						//addVertex 1
 		/* USE INDEX TO DETERMINE LOCATION, WHICH IS DONE 
-		 * EITHER BY GETTING THE SIZE AND ADDING A NEW ELEMNET TO THE END OF vertexList, 
+		 * EITHER BY GETTING THE SIZE AND ADDING A NEW ELEMENT TO THE END OF vertexList, 
 		 * OR, IF A VERTEX HAS BEEN DELETED BEFORE, BY GETTING THE INDEX OF THE FIRST FREE SPOT IN THE LIST.
 		 */		
 		int index;
 		
 		if(vertexList.indexOf(null) != -1){	//if there is any hole (null element) in the list
 			index = vertexList.indexOf(null);
-			vertexList.add(index, new GraphVertex(index));	//shifts the null element to index+1
+			vertexList.add(index, new GraphVertex(index));	//here the null element is shifted to index+1
 			vertexList.remove(index+1);						//removes the null element
 			
-		} else {
-			index = vertexList.size();		//if there is NO hole (null element) in the list
-			vertexList.add(index, new GraphVertex(index));
+		} else {											//if there is NO hole (null element) in the list
+			index = vertexList.size();		
+			vertexList.add(new GraphVertex(index)); 		//just add to the end of the list.
 		}
 		
 		setChanged();
@@ -100,8 +95,8 @@ public class GraphModel extends Observable {
 	
 
 	public void removeVertex(int index){
-		// FIRST REMOVE ALL EDGES CONNECTED TO THE VERTEX, THEN THE VERTEX ITSELF
 		
+		// FIRST REMOVE ALL EDGES CONNECTED TO THE VERTEX
 		for(int i = 0; i<edgeList.size() ; i++){
 			if(edgeList.get(i).getConnected1() == vertexList.get(index) 
 					|| edgeList.get(i).getConnected2() == vertexList.get(index)){
@@ -110,7 +105,9 @@ public class GraphModel extends Observable {
 			}
 		}
 		
-		//sets the vertex at the index to null, without shifting the rest left
+		/*sets the vertex at the index to null, without shifting the rest left
+		 * (reason we don't just delete it from the list: we want to leave a spot for
+		 * the vertex that is generated next to take, with respect to the seven default locations*/ 
 		vertexList.set(index, null);
 		selectedVertexIndex = -1;
 		

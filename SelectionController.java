@@ -26,8 +26,7 @@ public class SelectionController extends Observable implements MouseListener, Mo
 	public void setSetting(String newSetting){
 		System.out.println("SETTING MOUSE SETTING TO " + newSetting);
 		this.setting = newSetting;
-		if(newSetting.equals("edge")){
-			System.out.println("SUPPOSEDLY RESETTING SELECTED VERTEX");
+		if(newSetting.equals("edge")){			//when having to select an edge, we don't
 			vertexIndex = -1;
 			theModel.setSelectedVertexIndex(vertexIndex);
 			setChanged();
@@ -35,38 +34,9 @@ public class SelectionController extends Observable implements MouseListener, Mo
 		}
 	}
 	public void mouseClicked(MouseEvent e){
-		System.out.println("Mouse clicked at " + e.getX() + "," + e.getY()); //just a confirmation print
-		
-		//index of the vertex that contains the point x,y, or -1 if no vertex contains the point.
-		//int vertexIndex = theModel.vertexThatContainsPoint(e.getX(),e.getY());
-
-		//if(vertexIndex != -1 ){			//if a vertex contains the point
-		//	theModel.setSelectedVertexIndex(vertexIndex);
-
-			//setChanged();
-			//notifyObservers();
-		//}
+		System.out.println("Mouse clicked at " + e.getX() + "," + e.getY());
 	}
 	
-	/*
-	public void drawEdge(Graphics g){
-		System.out.println("AT START OF DRAWEDGE");
-		
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setStroke(new BasicStroke(3));
-		
-		//following lines need to be edited
-		int x1 = (int)vertex1.getX();
-		int y1 = (int)vertex1.getY();
-		int x2 = (int)vertex2.getX();
-		int y2 = (int)vertex2.getY();
-		
-		System.out.println("Drawing line between " +x1 +","+y2 + " and " +x2 +","+y2);
-		g.drawLine(x1, y1, x2, y2);
-		//setChanged();
-		//notifyObservers("null");
-	}
-	*/
 	public void mouseEntered(MouseEvent e){
 		System.out.println("Mouse entered at " + e.getX() + "," + e.getY()); 	//just a confirmation print
 
@@ -85,12 +55,10 @@ public class SelectionController extends Observable implements MouseListener, Mo
 		if(vertexIndex != -1 ){			//if a vertex contains the point
 			theModel.setSelectedVertexIndex(vertexIndex);
 			
-			if(setting.equals("edge")){	
-				System.out.println("PRESSED vertex1 = " + vertex1 + ", vertex2 = " + vertex2);
+			if(setting.equals("edge")){	//if the mode is to draw an edge, call setEdge
 				setEdge();			
 			}
 			
-			System.out.println("You selected the Vertex with index " + vertexIndex);
 			x = e.getX();
 			y = e.getY();
 			setChanged();
@@ -131,13 +99,10 @@ public class SelectionController extends Observable implements MouseListener, Mo
 	 *  SELECTS THE NEXT TWO VERTICES TO BE THE END OF THE EDGE, THEN SETS SETTING BACK TO DEFAULT 
 	 */
 	private void setEdge(){
-		System.out.println("PRINTEDGE");
 		if(vertex1 == null){
 			vertex1 = theModel.getVertexAtIndex(vertexIndex);
-			System.out.println("DRAWING LINE BETWEEN VERTEX " + vertex1);
 		} else {
 			vertex2 = theModel.getVertexAtIndex(vertexIndex);
-			System.out.println("AND VERTEX " + vertex2);
 			//now both vertex 1 and 2 are set, so we can add the edge.
 			theModel.addEdge(vertex1, vertex2);
 			vertex1 = null; vertex2 = null;
