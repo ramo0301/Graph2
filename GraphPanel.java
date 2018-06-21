@@ -8,7 +8,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
 
+import javax.swing.AbstractAction;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -20,13 +22,15 @@ public class GraphPanel extends JPanel implements Observer {
 	 */
 	private GraphModel theModel = null;
 	private SelectionController mouse;
+	private JTextField vertexName;
 	
 	public GraphPanel(GraphModel theModel){
 		super();
 		setBackground(Color.LIGHT_GRAY);
 		setLayout(new BorderLayout());
 		
-		JTextField vertexName = new JTextField(NUMBER_OF_CHAR);
+		vertexName = new JTextField(NUMBER_OF_CHAR);
+		vertexName.setEditable(false);
 		add(vertexName, BorderLayout.SOUTH);
 		
 		/* include the model so we can access it, and make it an observer. Model is also input to mouse.
@@ -36,6 +40,14 @@ public class GraphPanel extends JPanel implements Observer {
 		mouse = new SelectionController(this, theModel);
 	}
 	
+	
+	public void setVertexNameEditable(boolean bool){
+		vertexName.setEditable(bool);
+	}
+	
+	public void setVertexName(String string){
+		vertexName.setText(string);
+	}
 	
 	/* SETTER FOR MODEL
 	 */
@@ -68,5 +80,17 @@ public class GraphPanel extends JPanel implements Observer {
 		theModel.drawAllEdges(g);
 		//draw all vertices
 		theModel.drawAllVertices(g);
+	}
+	
+	
+	public class setTextField extends AbstractAction {
+
+		public setTextField(){
+			super("Set text field");
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			vertexName.setText("test");
+		}
 	}
 }

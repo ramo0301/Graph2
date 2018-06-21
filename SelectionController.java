@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.Observable;
+import javax.swing.SwingUtilities;
 
 public class SelectionController extends Observable implements MouseListener, MouseMotionListener{
 	private GraphPanel thePanel = null;
@@ -52,6 +53,12 @@ public class SelectionController extends Observable implements MouseListener, Mo
 		vertexIndex = theModel.vertexThatContainsPoint(e.getX(),e.getY());
 
 		if(vertexIndex != -1 ){			//if a vertex contains the point
+			if(SwingUtilities.isRightMouseButton(e)){
+				System.out.println("RIGHT CLICK");
+				thePanel.setVertexNameEditable(true);
+				thePanel.setVertexName(theModel.getVertexAtIndex(vertexIndex).getName());
+			}
+			
 			theModel.setSelectedVertexIndex(vertexIndex);
 			
 			if(setting.equals("edge")){	//if the mode is to draw an edge, call setEdge

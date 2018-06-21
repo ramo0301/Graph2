@@ -11,14 +11,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 
 public class GraphFrame extends JFrame {
 	
 	public static final int FRAME_WIDTH = 1000;
 	public static final int FRAME_HEIGHT = 500;
-	public static final int	NUMBER_OF_CHAR = 20;
 	
 	GraphModel theModel = new GraphModel();
 	GraphPanel thePanel = new GraphPanel(theModel);
@@ -61,7 +59,6 @@ public class GraphFrame extends JFrame {
 		add(new EmptyPanel() , BorderLayout.EAST);
 		add(new EmptyPanel() , BorderLayout.WEST);
 		add(thePanel , BorderLayout.CENTER);
-		
 	}
 
 	

@@ -4,8 +4,11 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Observable;
+
+import javax.swing.AbstractAction;
 
 public class GraphModel extends Observable {
 	
