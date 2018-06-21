@@ -113,7 +113,6 @@ public class GraphFrame extends JFrame {
 		 * WHEN THE NEXT TWO VERTICES HAVE BEEN SELECTED, AN EDGE WILL BE DRAWN BETWEEN THEM.
 		 */
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("action performed");
 			thePanel.setMouseSetting("edge");
 		}
 		

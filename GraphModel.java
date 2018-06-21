@@ -61,7 +61,6 @@ public class GraphModel extends Observable {
 			vertexList.add(index, new GraphVertex(index));
 		}
 		
-		System.out.println("INDEX STILL NULL? " + vertexList.get(index));
 		setChanged();
 		notifyObservers();
 	}
@@ -89,6 +88,7 @@ public class GraphModel extends Observable {
 	 * THE OTHER WITH INDEXES OF THOSE GraphEdges.
 	 */
 	public void addEdge(GraphVertex  connectedVertex1, GraphVertex  connectedVertex2){
+		System.out.println("DRAWING EDGE");
 		edgeList.add(new GraphEdge(connectedVertex1, connectedVertex2));
 	}
 	

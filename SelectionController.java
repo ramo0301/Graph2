@@ -24,9 +24,8 @@ public class SelectionController extends Observable implements MouseListener, Mo
 	}
 	
 	public void setSetting(String newSetting){
-		System.out.println("setting mouse setting to " + newSetting);
+		System.out.println("SETTING MOUSE SETTING TO " + newSetting);
 		this.setting = newSetting;
-		System.out.println("done that");
 	}
 	public void mouseClicked(MouseEvent e){
 		System.out.println("Mouse clicked at " + e.getX() + "," + e.getY()); //just a confirmation print
@@ -36,24 +35,12 @@ public class SelectionController extends Observable implements MouseListener, Mo
 
 		if(vertexIndex != -1 ){			//if a vertex contains the point
 			theModel.setSelectedVertexIndex(vertexIndex);
-			if(setting == "edge"){
-				if(vertex1 == null){
-					vertex1 = theModel.getVertexAtIndex(vertexIndex);
-					System.out.println("DRAWING LINE BETWEEN VERTEX " + vertex1);
-				} else {
-					vertex2 = theModel.getVertexAtIndex(vertexIndex);
-					System.out.println("AND VERTEX " + vertex2);
-					//now both vertex 1 and 2 are set, so we can draw the edge.
-					theModel.addEdge(vertex1, vertex2);
-					vertex1 = null; vertex2 = null;
-					setSetting("default");
-					
-				}
-			}
+
 			setChanged();
 			notifyObservers();
 		}
 	}
+	
 	/*
 	public void drawEdge(Graphics g){
 		System.out.println("AT START OF DRAWEDGE");
@@ -90,6 +77,12 @@ public class SelectionController extends Observable implements MouseListener, Mo
 
 		if(vertexIndex != -1 ){			//if a vertex contains the point
 			theModel.setSelectedVertexIndex(vertexIndex);
+			
+			if(setting == "edge"){	
+				System.out.println("PRESSED vertex1 = " + vertex1 + ", vertex2 = " + vertex2);
+				setEdge();			
+			}
+			
 			System.out.println("You selected the Vertex with index " + vertexIndex);
 			x = e.getX();
 			y = e.getY();
@@ -125,6 +118,26 @@ public class SelectionController extends Observable implements MouseListener, Mo
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
+	/* 	INVOKED IN mousePressed WHEN THE SETTING IS: "edge".
+	 *  SELECTS THE NEXT TWO VERTICES TO BE THE END OF THE EDGE, THEN SETS SETTING BACK TO DEFAULT 
+	 */
+	private void setEdge(){
+		System.out.println("PRINTEDGE");
+		if(vertex1 == null){
+			vertex1 = theModel.getVertexAtIndex(vertexIndex);
+			System.out.println("DRAWING LINE BETWEEN VERTEX " + vertex1);
+		} else {
+			vertex2 = theModel.getVertexAtIndex(vertexIndex);
+			System.out.println("AND VERTEX " + vertex2);
+			//now both vertex 1 and 2 are set, so we can add the edge.
+			theModel.addEdge(vertex1, vertex2);
+			vertex1 = null; vertex2 = null;
+			setSetting("default");
+		}
+	}
+	
 
 
 }
