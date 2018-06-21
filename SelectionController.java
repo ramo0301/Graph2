@@ -107,17 +107,15 @@ public class SelectionController extends Observable implements MouseListener, Mo
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		System.out.println("Mouse being dragged");
-		System.out.println(theModel.getVertexAtIndex(vertexIndex));
-		GraphVertex currentVertex = theModel.getVertexAtIndex(vertexIndex);
-		System.out.println("event coordinates: " + ( e.getX()- x) + ", " + (e.getY() - y));
-		int newX = (int)currentVertex.getX()+e.getX()-x, newY = (int)currentVertex.getY()+e.getY()-y;
-		currentVertex.setLocation((int)currentVertex.getX()+e.getX()-x,(int)currentVertex.getY()+e.getY()-y);
-		x = newX;
-		y = newY;
-		setChanged();
-		notifyObservers();
-		//event.getComponent().setLocation((event.getX()+event.getComponent().getX()-X), (event.getY()+event.getComponent().getY()-Y));
-		
+		if(vertexIndex != -1){
+			GraphVertex currentVertex = theModel.getVertexAtIndex(vertexIndex);
+			currentVertex.setLocation((int)currentVertex.getX()+e.getX()-x,(int)currentVertex.getY()+e.getY()-y);
+			x = e.getX();
+			y = e.getY();
+			setChanged();
+			notifyObservers();
+		}
+
 	}
 
 	@Override
