@@ -26,19 +26,26 @@ public class SelectionController extends Observable implements MouseListener, Mo
 	public void setSetting(String newSetting){
 		System.out.println("SETTING MOUSE SETTING TO " + newSetting);
 		this.setting = newSetting;
+		if(newSetting.equals("edge")){
+			System.out.println("SUPPOSEDLY RESETTING SELECTED VERTEX");
+			vertexIndex = -1;
+			theModel.setSelectedVertexIndex(vertexIndex);
+			setChanged();
+			notifyObservers();
+		}
 	}
 	public void mouseClicked(MouseEvent e){
 		System.out.println("Mouse clicked at " + e.getX() + "," + e.getY()); //just a confirmation print
 		
 		//index of the vertex that contains the point x,y, or -1 if no vertex contains the point.
-		int vertexIndex = theModel.vertexThatContainsPoint(e.getX(),e.getY());
+		//int vertexIndex = theModel.vertexThatContainsPoint(e.getX(),e.getY());
 
-		if(vertexIndex != -1 ){			//if a vertex contains the point
-			theModel.setSelectedVertexIndex(vertexIndex);
+		//if(vertexIndex != -1 ){			//if a vertex contains the point
+		//	theModel.setSelectedVertexIndex(vertexIndex);
 
-			setChanged();
-			notifyObservers();
-		}
+			//setChanged();
+			//notifyObservers();
+		//}
 	}
 	
 	/*
@@ -78,7 +85,7 @@ public class SelectionController extends Observable implements MouseListener, Mo
 		if(vertexIndex != -1 ){			//if a vertex contains the point
 			theModel.setSelectedVertexIndex(vertexIndex);
 			
-			if(setting == "edge"){	
+			if(setting.equals("edge")){	
 				System.out.println("PRESSED vertex1 = " + vertex1 + ", vertex2 = " + vertex2);
 				setEdge();			
 			}
