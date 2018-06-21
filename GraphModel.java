@@ -73,7 +73,7 @@ public class GraphModel extends Observable {
 	}
 	
 	
-	/*TWO DIFFERENT METHODS ADDVERTEX, ONE WITH GraphEdge ARGUMENTS,
+	/*TWO DIFFERENT METHODS addEdge, ONE WITH GraphEdge ARGUMENTS,
 	 * THE OTHER WITH INDEXES OF THOSE GraphEdges.
 	 */
 	public void addEdge(GraphVertex  connectedVertex1, GraphVertex  connectedVertex2){

@@ -56,9 +56,9 @@ public class GraphPanel extends JPanel implements Observer {
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		
-		//draw all vertices
-		theModel.drawAllVertices(g);
 		//draw all edges
 		theModel.drawAllEdges(g);
+		//draw all vertices
+		theModel.drawAllVertices(g);
 	}
 }

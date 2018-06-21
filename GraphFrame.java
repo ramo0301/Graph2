@@ -34,6 +34,7 @@ public class GraphFrame extends JFrame {
 		JMenu theMenu = new JMenu("Menu");
 		JMenuItem menuAddVertex = new JMenuItem("Add Vertex");
 		JMenuItem menuAddEdge = new JMenuItem("Add Edge");
+		//JMenuItem menuDeleteVertex = new JMenuItem("Delete Selected Vertex");
 		JMenuBar bar = new JMenuBar();
 		
 		theMenu.add(menuAddVertex);
