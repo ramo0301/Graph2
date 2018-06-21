@@ -98,20 +98,38 @@ public class GraphModel extends Observable {
 		notifyObservers();
 	}
 	
-	
-	/* REMOVE VERTEX OR EDGE
-	*/
+
 	public void removeVertex(int index){
+		// FIRST REMOVE ALL EDGES CONNECTED TO THE VERTEX, THEN THE VERTEX ITSELF
+		
+		//boolean to determine whether we've deleted every every edge connected to the vertex
+		boolean notDoneWithEdgeList = true; //we can't just delete everything in one loop.
+		
+		while(notDoneWithEdgeList){
+			notDoneWithEdgeList = false;	//default: if we don't delete any edges, we know that we don't need to go through the list again
+			for(GraphEdge edge : edgeList){
+				if(edge.getConnected1() == vertexList.get(index) 
+						|| edge.getConnected2() == vertexList.get(index)){
+					removeEdge(edgeList.indexOf(edge));
+					notDoneWithEdgeList = true;		//deleted edge: not at the end of list, so need to continue
+					break;
+				}
+			}
+		}
+		
 		//sets the vertex at the index to null, without shifting the rest left
 		vertexList.set(index, null);
 		selectedVertexIndex = -1;
+		
 		setChanged();
 		notifyObservers();
 	}
 	
 	public void removeEdge(int index){
 		//sets the edge at the index to null, without shifting the rest left
-		edgeList.set(index, null);
+		System.out.println("here");
+		edgeList.remove(index);
+		System.out.println("here2");
 	}
 	
 	

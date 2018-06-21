@@ -97,6 +97,7 @@ public class GraphFrame extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if(theModel.getSelectedVertexIndex() != -1)	//if a vertex is selected, delete it
 				theModel.removeVertex(theModel.getSelectedVertexIndex());
+				//^Removes the vertex with from the list, passing its index as argument
 		}
 	}
 	
