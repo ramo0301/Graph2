@@ -33,9 +33,13 @@ public class GraphFrame extends JFrame {
 		 */
 		JMenu theMenu = new JMenu("Menu");
 		JMenuItem menuAddVertex = new JMenuItem("Add Vertex");
+		JMenuItem menuDeleteVertex = new JMenuItem("Delete Selected Vertex");
+		JMenuItem menuAddEdge = new JMenuItem("Add Edge");
 		JMenuBar bar = new JMenuBar();
 		
 		theMenu.add(menuAddVertex);
+		theMenu.add(menuAddEdge);
+		theMenu.add(menuDeleteVertex);
 		bar.add(theMenu);
 		setJMenuBar(bar);
 		
@@ -43,7 +47,11 @@ public class GraphFrame extends JFrame {
 		/* INITIALIZE ACTIONS AND SET TO MENU ITEMS
 		 */
 		Action addVertex = new AddVertexAction();
+		Action deleteVertex = new DeleteVertexAction();
+		Action addEdge = new AddEdgeAction();
 		menuAddVertex.setAction(addVertex);
+		menuDeleteVertex.setAction(deleteVertex);
+		menuAddEdge.setAction(addEdge);
 		
 		/* RELEVANT PANEL IN THE CENTER, BLANK PANELS AS BORDERS
 		 */
@@ -66,29 +74,50 @@ public class GraphFrame extends JFrame {
 	
 	private class AddVertexAction extends AbstractAction {
 		
-		/* DEFAULT X AND Y VALUES
-		 */
-		int x=300, y=200;
-		
-		
-		/* TWO CONSTRUCTORS
-		 */
+		// DEFAULT CONSTRUCTOR
 		public AddVertexAction(){
 			super("Add Vertex");
 		}
 		
-		public AddVertexAction(int inputX, int inputY){
-			super("Add Vertex");
-			x = inputX;
-			y = inputY;
-		}
-		
-		
+		/* ADDS A VERTEX TO THE MODEL,
+		 */
 		public void actionPerformed(ActionEvent e) {
-			theModel.addVertex(x,y);
-			thePanel.repaint();
-			
+			theModel.addVertex();
 		}
 	}
+	
+	
+	private class DeleteVertexAction extends AbstractAction {
+		
+		//DEFAULT CONSTRUCTOR
+		public DeleteVertexAction(){
+			super("Delete Selected Vertex");
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			if(theModel.getSelectedVertexIndex() != -1)	//if a vertex is selected, delete it
+				theModel.removeVertex(theModel.getSelectedVertexIndex());
+				//^Removes the vertex with from the list, passing its index as argument
+		}
+	}
+	
+	
+	private class AddEdgeAction extends AbstractAction {
+		
+		//DEFAULT CONSTRUCTOR
+		public AddEdgeAction(){
+			super("Add Edge");
+		}
+		
+		/* SET THE MOUSELISTENERS TO THE SETTING THAT MAKES IT SO THAT
+		 * WHEN THE NEXT TWO VERTICES HAVE BEEN SELECTED, AN EDGE WILL BE DRAWN BETWEEN THEM.
+		 */
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("action performed");
+			thePanel.setMouseSetting("edge");
+		}
+		
+	}
+
 
 }

@@ -31,12 +31,15 @@ public class GraphEdge {
 		this.connected2 = connected2;
 	}
 	
+	
+	/* Most likely not needed, just used for testing
+	
 	@Override
 	public String toString(){
 		String returnString = "connected1: " + connected1.getName();
 		returnString += "\nconnected2: " + connected2.getName();
 		return returnString;
 	}
-
+	 */
 
 }
