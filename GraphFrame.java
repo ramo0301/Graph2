@@ -34,11 +34,12 @@ public class GraphFrame extends JFrame {
 		JMenu theMenu = new JMenu("Menu");
 		JMenuItem menuAddVertex = new JMenuItem("Add Vertex");
 		JMenuItem menuAddEdge = new JMenuItem("Add Edge");
-		//JMenuItem menuDeleteVertex = new JMenuItem("Delete Selected Vertex");
+		JMenuItem menuDeleteVertex = new JMenuItem("Delete Selected Vertex");
 		JMenuBar bar = new JMenuBar();
 		
 		theMenu.add(menuAddVertex);
 		theMenu.add(menuAddEdge);
+		theMenu.add(menuDeleteVertex);
 		bar.add(theMenu);
 		setJMenuBar(bar);
 		
@@ -46,8 +47,10 @@ public class GraphFrame extends JFrame {
 		/* INITIALIZE ACTIONS AND SET TO MENU ITEMS
 		 */
 		Action addVertex = new AddVertexAction();
+		Action deleteVertex = new DeleteVertexAction();
 		Action addEdge = new AddEdgeAction();
 		menuAddVertex.setAction(addVertex);
+		menuDeleteVertex.setAction(deleteVertex);
 		menuAddEdge.setAction(addEdge);
 		
 		/* RELEVANT PANEL IN THE CENTER, BLANK PANELS AS BORDERS
@@ -84,8 +87,23 @@ public class GraphFrame extends JFrame {
 	}
 	
 	
+	private class DeleteVertexAction extends AbstractAction {
+		
+		//DEFAULT CONSTRUCTOR
+		public DeleteVertexAction(){
+			super("Delete Selected Vertex");
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			if(theModel.getSelectedVertexIndex() != -1)	//if a vertex is selected, delete it
+				theModel.removeVertex(theModel.getSelectedVertexIndex());
+		}
+	}
+	
+	
 	private class AddEdgeAction extends AbstractAction {
 		
+		//DEFAULT CONSTRUCTOR
 		public AddEdgeAction(){
 			super("Add Edge");
 		}
@@ -99,5 +117,6 @@ public class GraphFrame extends JFrame {
 		}
 		
 	}
+
 
 }

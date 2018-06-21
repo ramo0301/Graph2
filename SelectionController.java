@@ -107,6 +107,7 @@ public class SelectionController extends Observable implements MouseListener, Mo
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		System.out.println("Mouse being dragged");
+		vertexIndex = theModel.getSelectedVertexIndex();
 		if(vertexIndex != -1){				/*if, at the moment, a vertex is selected
 		* (as determined in mousePressed), then change the location of that vertex. Otherwise, do nothing.*/
 			GraphVertex currentVertex = theModel.getVertexAtIndex(vertexIndex);

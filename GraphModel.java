@@ -92,6 +92,9 @@ public class GraphModel extends Observable {
 	public void removeVertex(int index){
 		//sets the vertex at the index to null, without shifting the rest left
 		vertexList.set(index, null);
+		selectedVertexIndex = -1;
+		setChanged();
+		notifyObservers();
 	}
 	
 	public void removeEdge(int index){
@@ -121,6 +124,9 @@ public class GraphModel extends Observable {
 		/* GO THROUGH EVER VERTEX IN THE LIST, GET COORDINATIONS, DIMENSIONS, NAME, AND PRINT IT ALL
 		 */
 		for(GraphVertex vertex : vertexList){
+			if(vertex == null)
+				continue;	//skip  holes in the list (deleted vertices)
+			
 			int x = (int)vertex.getX(), y = (int)vertex.getY(), width = (int)vertex.getWidth(), height = (int)vertex.getHeight();
 			String name = vertex.getName();
 			Color fillColor = Color.WHITE, borderColor = Color.BLACK;	//set default colors, writing is also in border color
@@ -165,7 +171,11 @@ public class GraphModel extends Observable {
 	 * CONTAIN THE POINT X,Y. IF ONE DOES, IT RETURNS THE INDEX OF THAT VERTEX. OTHERWISE IT RETURNS -1
 	 */
 	public int vertexThatContainsPoint(int x, int y){
+		
 		for(GraphVertex vertex : vertexList){
+			if(vertex == null)
+				continue;	//skip  holes in the list (deleted vertices)
+			
 			if(vertex.contains(x, y)){
 				return vertexList.indexOf(vertex);
 			}
