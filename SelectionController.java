@@ -59,7 +59,7 @@ public class SelectionController extends Observable implements MouseListener, Mo
 		
 		vertexIndex = theModel.vertexThatContainsPoint(e.getX(),e.getY());
 
-		if(vertexIndex != -1 ){			//if a vertex contains the point
+		if(vertexIndex != -1 ){			//if a vertex was pressed
 			if(SwingUtilities.isRightMouseButton(e)){
 				System.out.println("RIGHT CLICK");
 				thePanel.setVertexNameEditable(true);
@@ -77,6 +77,8 @@ public class SelectionController extends Observable implements MouseListener, Mo
 			
 			setChanged();
 			notifyObservers();
+		} else {						//if a vertex was not pressed
+			theModel.setSelectedVertexIndex(-1);
 		}
 
 	}
