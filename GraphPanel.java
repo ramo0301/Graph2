@@ -9,12 +9,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class GraphPanel extends JPanel implements Observer {
+public class GraphPanel extends JPanel implements ActionListener, Observer {
 	
 	private static final int NUMBER_OF_CHAR = 20;
 	
@@ -22,16 +23,17 @@ public class GraphPanel extends JPanel implements Observer {
 	 */
 	private GraphModel theModel = null;
 	private SelectionController mouse;
-	private JTextField vertexName;
+	private JTextField textField;
 	
 	public GraphPanel(GraphModel theModel){
 		super();
 		setBackground(Color.LIGHT_GRAY);
 		setLayout(new BorderLayout());
 		
-		vertexName = new JTextField(NUMBER_OF_CHAR);
-		vertexName.setEditable(false);
-		add(vertexName, BorderLayout.SOUTH);
+		textField = new JTextField(NUMBER_OF_CHAR);
+		textField.setEditable(false);
+		textField.addActionListener(this);
+		add(textField, BorderLayout.SOUTH);
 		
 		/* include the model so we can access it, and make it an observer. Model is also input to mouse.
 		 */
@@ -42,11 +44,11 @@ public class GraphPanel extends JPanel implements Observer {
 	
 	
 	public void setVertexNameEditable(boolean bool){
-		vertexName.setEditable(bool);
+		textField.setEditable(bool);
 	}
 	
 	public void setVertexName(String string){
-		vertexName.setText(string);
+		textField.setText(string);
 	}
 	
 	/* SETTER FOR MODEL
@@ -82,7 +84,7 @@ public class GraphPanel extends JPanel implements Observer {
 		theModel.drawAllVertices(g);
 	}
 	
-	
+	/*
 	public class setTextField extends AbstractAction {
 
 		public setTextField(){
@@ -90,7 +92,16 @@ public class GraphPanel extends JPanel implements Observer {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			vertexName.setText("test");
+			textField.setText("test");
 		}
+	} */
+
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		String text = textField.getText();
+		theModel.getVertexAtIndex(theModel.getSelectedVertexIndex()).setName(text);
+		repaint();
+		System.out.println(text);
 	}
 }
