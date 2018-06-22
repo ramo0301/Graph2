@@ -26,8 +26,8 @@ public class GraphModel extends Observable {
 		lineToMouse = null;
 	}
 	
-	public void setLineToMouse(int endX, int endY) {
-		lineToMouse.setCoordinates(endX, endY);
+	public void setLineToMouse(int startX, int startY, int endX, int endY) {
+		lineToMouse.setCoordinates(startX, startY, endX, endY);
 		setChanged();
 		notifyObservers();
 	}

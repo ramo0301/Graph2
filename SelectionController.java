@@ -77,9 +77,11 @@ public class SelectionController extends Observable implements MouseListener, Mo
 			
 			setChanged();
 			notifyObservers();
-		} else {						//if a vertex was not pressed
-			theModel.setSelectedVertexIndex(-1);
+		} else if (!setting.equals("edge")){		//if a vertex was not pressed, and currently an edge is being drawn
+			System.out.println("DESELECTEDDESELCTED");
+			theModel.setSelectedVertexIndex(-1);	//deselect the currently selected vertex
 		}
+		System.out.println(theModel.getSelectedVertexIndex());
 
 	}
 
@@ -107,7 +109,10 @@ public class SelectionController extends Observable implements MouseListener, Mo
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		if(setting.equals("edge")){	//if the mode is to draw an edge, call setEdge
-			theModel.setLineToMouse(e.getX(),e.getY());
+			System.out.println("MOUSEMOVED, " + vertexIndex);
+			x = (int)theModel.getVertexAtIndex(theModel.getSelectedVertexIndex()).getX();
+			y = (int)theModel.getVertexAtIndex(theModel.getSelectedVertexIndex()).getY();
+			theModel.setLineToMouse(x, y, e.getX(),e.getY());
 		}
 
 	}
