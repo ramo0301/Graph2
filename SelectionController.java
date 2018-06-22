@@ -41,21 +41,21 @@ public class SelectionController extends Observable implements MouseListener, Mo
 		}
 	}
 	public void mouseClicked(MouseEvent e){
-		System.out.println("Mouse clicked at " + e.getX() + "," + e.getY());
+		//System.out.println("Mouse clicked at " + e.getX() + "," + e.getY());
 	}
 	
 	public void mouseEntered(MouseEvent e){
-		System.out.println("Mouse entered at " + e.getX() + "," + e.getY()); 	//just a confirmation print
+		//System.out.println("Mouse entered at " + e.getX() + "," + e.getY()); 	//just a confirmation print
 
 	}
 
 	public void mouseExited(MouseEvent e){
-		System.out.println("Mouse exited at " + e.getX() + "," + e.getY()); 	//just a confirmation print
+		//System.out.println("Mouse exited at " + e.getX() + "," + e.getY()); 	//just a confirmation print
 
 	}
 
 	public void mousePressed(MouseEvent e){
-		System.out.println("Mouse pressed at " + e.getX() + "," + e.getY()); 	//just a confirmation print
+		//System.out.println("Mouse pressed at " + e.getX() + "," + e.getY()); 	//just a confirmation print
 		
 		vertexIndex = theModel.vertexThatContainsPoint(e.getX(),e.getY());
 
@@ -81,18 +81,18 @@ public class SelectionController extends Observable implements MouseListener, Mo
 			System.out.println("DESELECTEDDESELCTED");
 			theModel.setSelectedVertexIndex(-1);	//deselect the currently selected vertex
 		}
-		System.out.println(theModel.getSelectedVertexIndex());
+		//System.out.println(theModel.getSelectedVertexIndex());
 
 	}
 
 	public void mouseReleased(MouseEvent e){
-		System.out.println("Mouse released at " + e.getX() + "," + e.getY());	//just a confirmation print
+		//System.out.println("Mouse released at " + e.getX() + "," + e.getY());	//just a confirmation print
 
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		//System.out.println("Mouse being dragged");
+		System.out.println("Mouse being dragged");
 		vertexIndex = theModel.getSelectedVertexIndex();
 		if(vertexIndex != -1){				/*if, at the moment, a vertex is selected
 		* (as determined in mousePressed), then change the location of that vertex. Otherwise, do nothing.*/
@@ -100,6 +100,10 @@ public class SelectionController extends Observable implements MouseListener, Mo
 			currentVertex.setLocation((int)currentVertex.getX()+e.getX()-x,(int)currentVertex.getY()+e.getY()-y);
 			x = e.getX();
 			y = e.getY();
+			if(setting.equals("edge")){	//if an edge is being drawn, draw a line from the selected vertex to the mouse
+				System.out.println("MOUSEMOVED, " + vertexIndex);
+				theModel.setLineToMouse(x, y, e.getX(),e.getY());
+			}
 			setChanged();
 			notifyObservers();
 		}
@@ -108,11 +112,11 @@ public class SelectionController extends Observable implements MouseListener, Mo
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		if(setting.equals("edge")){	//if the mode is to draw an edge, call setEdge
+		if(setting.equals("edge")){	//if an edge is being drawn, draw a line from the selected vertex to the mouse
 			System.out.println("MOUSEMOVED, " + vertexIndex);
-			x = (int)theModel.getVertexAtIndex(theModel.getSelectedVertexIndex()).getX();
-			y = (int)theModel.getVertexAtIndex(theModel.getSelectedVertexIndex()).getY();
-			theModel.setLineToMouse(x, y, e.getX(),e.getY());
+			int newStartX = (int)theModel.getVertexAtIndex(theModel.getSelectedVertexIndex()).getX();
+			int newStartY = (int)theModel.getVertexAtIndex(theModel.getSelectedVertexIndex()).getY();
+			theModel.setLineToMouse(newStartX, newStartY, e.getX(),e.getY());
 		}
 
 	}
