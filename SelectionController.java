@@ -35,6 +35,8 @@ public class SelectionController extends Observable implements MouseListener, Mo
 			theModel.makeLineToMouse(startX, startY, x, y);
 			
 			setEdge();	//a vertex is already selected, and it becomes one of the vertices that the edge connects.
+		} else if(newSetting.equals("deleteEdge")){
+			deleteEdge();
 		} else if(newSetting.equals("default")){
 			theModel.disableLineToMouse();
 		}
@@ -74,6 +76,8 @@ public class SelectionController extends Observable implements MouseListener, Mo
 			
 			if(setting.equals("edge")){	//if the mode is to draw an edge, call setEdge
 				setEdge();			
+			} else if(setting.equals("deleteEdge")){	//if the mode is to delete an edge, call deleteEdge
+				deleteEdge();			
 			}
 			
 			setChanged();
@@ -136,6 +140,22 @@ public class SelectionController extends Observable implements MouseListener, Mo
 				vertex2 = theModel.getVertexAtIndex(vertexIndex);
 				//now both vertex 1 and 2 are set, so we can add the edge.
 				theModel.addEdge(vertex1, vertex2);
+				vertex1 = null; vertex2 = null;
+				setSetting("default");
+			} 
+		}
+
+	}
+	
+	private void deleteEdge(){
+		System.out.println("DELETING EDGE (SUPPOSEDLY)");
+		if(vertexIndex != -1){ 			//only do something if a vertex is selected.
+			if(vertex1 == null){		//vertex1 needs yet to be initialized
+				vertex1 = theModel.getVertexAtIndex(vertexIndex);
+			} else if(theModel.getVertexAtIndex(vertexIndex)!=vertex1){
+				vertex2 = theModel.getVertexAtIndex(vertexIndex);
+				//now both vertex 1 and 2 are set, so we can add the edge.
+				theModel.removeEdgeBetween(vertex1, vertex2);
 				vertex1 = null; vertex2 = null;
 				setSetting("default");
 			} 

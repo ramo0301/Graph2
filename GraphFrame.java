@@ -22,6 +22,7 @@ public class GraphFrame extends JFrame implements Observer {
 	
 	private JMenuItem menuDeleteVertex ;//instance variables so that they can...
 	private JMenuItem menuAddEdge;		//...be accessed by update (to dis/enable them)
+	private JMenuItem menuDeleteEdge;
 	
 	GraphModel theModel = new GraphModel();
 	GraphPanel thePanel = new GraphPanel(theModel);
@@ -42,16 +43,20 @@ public class GraphFrame extends JFrame implements Observer {
 		JMenuItem menuAddVertex = new JMenuItem("Add Vertex");
 		menuDeleteVertex = new JMenuItem("Delete Selected Vertex");
 		menuAddEdge = new JMenuItem("Add Edge");
+		menuDeleteEdge = new JMenuItem("Delete Edge");
+		
 		JMenuBar bar = new JMenuBar();
 		
 		theMenu.add(menuAddVertex);
-		theMenu.add(menuAddEdge);
 		theMenu.add(menuDeleteVertex);
+		theMenu.add(menuAddEdge);
+		theMenu.add(menuDeleteEdge);
 		bar.add(theMenu);
 		setJMenuBar(bar);
 		
-		menuAddEdge.setEnabled(false);
 		menuDeleteVertex.setEnabled(false);
+		menuAddEdge.setEnabled(false);
+		menuDeleteEdge.setEnabled(false);
 		
 		
 		/* INITIALIZE ACTIONS AND SET TO MENU ITEMS
@@ -118,6 +123,21 @@ public class GraphFrame extends JFrame implements Observer {
 		}
 		
 	}
+	
+	private class DeleteEdgeAction extends AbstractAction {
+
+		public DeleteEdgeAction(){
+			super("Delete Edge");
+		}
+
+		/* SET THE MOUSELISTENER TO THE SETTING THAT MAKES IT SO THAT
+		 * WHEN THE NEXT TWO VERTICES HAVE BEEN SELECTED, AN EDGE WILL BE DRAWN BETWEEN THEM.
+		 */
+		public void actionPerformed(ActionEvent e) {
+			thePanel.setMouseSetting("deleteEdge");
+		}
+
+	}
 
 
 	@Override
@@ -126,9 +146,11 @@ public class GraphFrame extends JFrame implements Observer {
 			
 			menuDeleteVertex.setEnabled(true);
 			menuAddEdge.setEnabled(true);
+			menuDeleteEdge.setEnabled(true);
 			
 			menuDeleteVertex.setAction(new DeleteVertexAction());
 			menuAddEdge.setAction(new AddEdgeAction());
+			menuDeleteEdge.setAction(new DeleteEdgeAction());
 		} else {									//if no vertex is selected
 			menuDeleteVertex.setEnabled(false);
 			menuAddEdge.setEnabled(false);
