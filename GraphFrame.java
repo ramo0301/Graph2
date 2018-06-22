@@ -24,8 +24,8 @@ public class GraphFrame extends JFrame implements Observer {
 	private JMenuItem menuAddEdge;		//...be accessed by update (to dis/enable them)
 	private JMenuItem menuDeleteEdge;
 	
-	GraphModel theModel = new GraphModel();
-	GraphPanel thePanel = new GraphPanel(theModel);
+	private GraphModel theModel = new GraphModel();
+	private GraphPanel thePanel = new GraphPanel(theModel);
 	
 	public GraphFrame(){
 		
@@ -41,6 +41,7 @@ public class GraphFrame extends JFrame implements Observer {
 		 */
 		JMenu theMenu = new JMenu("Menu");
 		JMenuItem menuAddVertex = new JMenuItem("Add Vertex");
+		JMenuItem menuAddFrame = new JMenuItem("Add Frame");
 		menuDeleteVertex = new JMenuItem("Delete Selected Vertex");
 		menuAddEdge = new JMenuItem("Add Edge");
 		menuDeleteEdge = new JMenuItem("Delete Edge");
@@ -51,6 +52,7 @@ public class GraphFrame extends JFrame implements Observer {
 		theMenu.add(menuDeleteVertex);
 		theMenu.add(menuAddEdge);
 		theMenu.add(menuDeleteEdge);
+		theMenu.add(menuAddFrame);
 		bar.add(theMenu);
 		setJMenuBar(bar);
 		
@@ -62,7 +64,9 @@ public class GraphFrame extends JFrame implements Observer {
 		/* INITIALIZE ACTIONS AND SET TO MENU ITEMS
 		 */
 		Action addVertex = new AddVertexAction();
+		Action addFrame = new AddFrameAction();
 		menuAddVertex.setAction(addVertex);
+		menuAddFrame.setAction(addFrame);
 		
 		// RELEVANT PANEL IN THE CENTER, BLANK PANELS AS BORDERS
 		add(new EmptyPanel() , BorderLayout.NORTH);
@@ -70,6 +74,18 @@ public class GraphFrame extends JFrame implements Observer {
 		add(new EmptyPanel() , BorderLayout.EAST);
 		add(new EmptyPanel() , BorderLayout.WEST);
 		add(thePanel , BorderLayout.CENTER);
+	}
+	
+	public void newFrame(){
+		System.out.println("SUPPOSEDLY MAKING NEW FRAME");
+		GraphFrame copyFrame = new GraphFrame();
+		copyFrame.setVisible(true);
+		
+	}
+	
+	
+	public GraphModel getModel(){
+		return theModel;
 	}
 
 	
@@ -124,6 +140,7 @@ public class GraphFrame extends JFrame implements Observer {
 		
 	}
 	
+	
 	private class DeleteEdgeAction extends AbstractAction {
 
 		public DeleteEdgeAction(){
@@ -135,6 +152,22 @@ public class GraphFrame extends JFrame implements Observer {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			thePanel.setMouseSetting("deleteEdge");
+		}
+
+	}
+	
+	
+	private class AddFrameAction extends AbstractAction {
+
+		public AddFrameAction(){
+			super("Add Frame");
+		}
+
+		/* SET THE MOUSELISTENER TO THE SETTING THAT MAKES IT SO THAT
+		 * WHEN THE NEXT TWO VERTICES HAVE BEEN SELECTED, AN EDGE WILL BE DRAWN BETWEEN THEM.
+		 */
+		public void actionPerformed(ActionEvent e) {
+			newFrame();
 		}
 
 	}
