@@ -1,4 +1,4 @@
-package current;
+package grapheditor;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -39,14 +39,91 @@ public class GraphFrame extends JFrame implements Observer {
 	private GraphPanel thePanel;
 	
 	public GraphFrame(String filename) throws IOException, ClassNotFoundException{
-		GraphModel newModel = new GraphModel();
-		FileInputStream fis = new FileInputStream(filename);
-		ObjectInputStream ois = new ObjectInputStream(fis);
-		newModel = (GraphModel) ois.readObject();
-		ois.close();
-		newFrame2(newModel);
+		super("Graph Frame");
 		
-		this.setVisible(false);
+		
+		System.out.println("Alternative constructor");
+		System.out.println(filename);
+		GraphModel newModel = new GraphModel();
+		File folder = new File("grapheditor/saves/");
+		File[] listOfFiles = folder.listFiles(new FilenameFilter(){
+			public boolean accept(File dir, String name) {
+				return name.toLowerCase().endsWith(".ser");
+			}
+		});
+		int choice = -1;
+		for (int i = 0; i < listOfFiles.length; i++) {
+			if (filename.equals(listOfFiles[i].getName())){
+				choice = i;
+			}
+				
+			   
+		}
+		if (choice != -1){
+			FileInputStream fis = new FileInputStream(listOfFiles[choice]);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			newModel = (GraphModel) ois.readObject();
+			ois.close();
+			this.theModel = newModel;
+			this.thePanel = new GraphPanel(newModel);
+		}else{
+			this.theModel = new GraphModel();
+			this.thePanel = new GraphPanel(this.theModel);
+		}
+		
+		setSize(FRAME_WIDTH, FRAME_HEIGHT);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new BorderLayout() );
+		setBackground(Color.DARK_GRAY);
+		
+		theModel.addObserver(this);
+		
+		/* INITIALIZE MENU
+		 */
+		JMenu theMenu = new JMenu("Menu");
+		JMenuItem menuAddVertex = new JMenuItem("Add Vertex");
+		JMenuItem menuAddFrame = new JMenuItem("Add Frame");
+		JMenuItem menuSave = new JMenuItem("Save");
+		JMenuItem menuLoad= new JMenuItem("Load");
+		menuDeleteVertex = new JMenuItem("Delete Selected Vertex");
+		menuAddEdge = new JMenuItem("Add Edge");
+		menuDeleteEdge = new JMenuItem("Delete Edge");
+		
+		JMenuBar bar = new JMenuBar();
+		
+		theMenu.add(menuAddVertex);
+		theMenu.add(menuDeleteVertex);
+		theMenu.add(menuAddEdge);
+		theMenu.add(menuDeleteEdge);
+		theMenu.add(menuAddFrame);
+		theMenu.add(menuSave);
+		theMenu.add(menuLoad);
+		bar.add(theMenu);
+		setJMenuBar(bar);
+		
+		menuDeleteVertex.setEnabled(false);
+		menuAddEdge.setEnabled(false);
+		menuDeleteEdge.setEnabled(false);
+		
+		
+		/* INITIALIZE ACTIONS AND SET TO MENU ITEMS
+		 */
+		Action addVertex = new AddVertexAction();
+		Action addFrame = new AddFrameAction();
+		Action save	= new SaveAction();
+		Action load = new LoadAction();
+		menuAddVertex.setAction(addVertex);
+		menuAddFrame.setAction(addFrame);
+		menuSave.setAction(save);
+		menuLoad.setAction(load);
+		
+		// RELEVANT PANEL IN THE CENTER, BLANK PANELS AS BORDERS
+		add(new EmptyPanel() , BorderLayout.NORTH);
+		add(new EmptyPanel() , BorderLayout.SOUTH);
+		add(new EmptyPanel() , BorderLayout.EAST);
+		add(new EmptyPanel() , BorderLayout.WEST);
+		add(thePanel , BorderLayout.CENTER);
+		
 	}
 	public GraphFrame(GraphModel theModel){
 		
@@ -261,10 +338,10 @@ public class GraphFrame extends JFrame implements Observer {
 	}
 	
 	public void save()throws IOException {
-		new File("src/current/saves/").mkdirs();
+		new File("grapheditor/saves/").mkdirs();
 		System.out.println("Type the save name");
 		String nameSave = getInput();
-		FileOutputStream fos = new FileOutputStream("src/current/saves/"+nameSave+".ser");
+		FileOutputStream fos = new FileOutputStream("grapheditor/saves/"+nameSave+".ser");
 	    ObjectOutputStream oos = new ObjectOutputStream(fos);
 	    oos.writeObject(theModel);
 	    oos.flush();
@@ -282,7 +359,7 @@ public class GraphFrame extends JFrame implements Observer {
 	}
 
 	public void load() throws ClassNotFoundException, IOException {
-		File folder = new File("src/current/saves/");
+		File folder = new File("grapheditor/saves/");
 		File[] listOfFiles = folder.listFiles(new FilenameFilter(){
 			public boolean accept(File dir, String name) {
 				return name.toLowerCase().endsWith(".ser");

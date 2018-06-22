@@ -1,4 +1,4 @@
-package current;
+package grapheditor;
 
 import java.io.Serializable;
 
