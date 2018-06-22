@@ -1,6 +1,12 @@
 package current;
 
-public class GraphEdge {
+import java.io.Serializable;
+
+public class GraphEdge implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6809116571313376013L;
 	private GraphVertex connected1 = null;
 	private GraphVertex connected2 = null;
 	

@@ -1,8 +1,13 @@
 package current;
 
 import java.awt.Rectangle;
+import java.io.Serializable;
 
-public class GraphVertex extends Rectangle{
+public class GraphVertex extends Rectangle implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2L;
 	public static final int DEFAULT_REC_X = 100;	//unused because we only use the third constructor
 	public static final int DEFAULT_REC_Y = 100;	//^same
 	public static final int DEFAULT_REC_WIDTH = 200;
