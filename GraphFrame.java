@@ -3,8 +3,14 @@ package current;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.InputMismatchException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Scanner;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -23,6 +29,7 @@ public class GraphFrame extends JFrame implements Observer {
 	private JMenuItem menuDeleteVertex ;//instance variables so that they can...
 	private JMenuItem menuAddEdge;		//...be accessed by update (to dis/enable them)
 	private JMenuItem menuDeleteEdge;
+	private Scanner var;
 	
 	private GraphModel theModel;
 	private GraphPanel thePanel;
@@ -46,6 +53,7 @@ public class GraphFrame extends JFrame implements Observer {
 		JMenu theMenu = new JMenu("Menu");
 		JMenuItem menuAddVertex = new JMenuItem("Add Vertex");
 		JMenuItem menuAddFrame = new JMenuItem("Add Frame");
+		JMenuItem menuSave = new JMenuItem("Save");
 		menuDeleteVertex = new JMenuItem("Delete Selected Vertex");
 		menuAddEdge = new JMenuItem("Add Edge");
 		menuDeleteEdge = new JMenuItem("Delete Edge");
@@ -57,6 +65,7 @@ public class GraphFrame extends JFrame implements Observer {
 		theMenu.add(menuAddEdge);
 		theMenu.add(menuDeleteEdge);
 		theMenu.add(menuAddFrame);
+		theMenu.add(menuSave);
 		bar.add(theMenu);
 		setJMenuBar(bar);
 		
@@ -69,8 +78,10 @@ public class GraphFrame extends JFrame implements Observer {
 		 */
 		Action addVertex = new AddVertexAction();
 		Action addFrame = new AddFrameAction();
+		Action save	= new SaveAction();
 		menuAddVertex.setAction(addVertex);
 		menuAddFrame.setAction(addFrame);
+		menuSave.setAction(save);
 		
 		// RELEVANT PANEL IN THE CENTER, BLANK PANELS AS BORDERS
 		add(new EmptyPanel() , BorderLayout.NORTH);
@@ -174,7 +185,51 @@ public class GraphFrame extends JFrame implements Observer {
 		}
 
 	}
+	
+	
+	public String getInput() {
+		var = new Scanner(System.in);
+		try {
+			return var.nextLine();
+		}
+		catch(InputMismatchException e) {
+			System.out.println("Please enter valid name");
+			return getInput();
+		} 
+	}
+	
+	private class SaveAction extends AbstractAction {
 
+		public SaveAction(){
+			super("Save");
+		}
+
+		/* SET THE MOUSELISTENER TO THE SETTING THAT MAKES IT SO THAT
+		 * WHEN THE NEXT TWO VERTICES HAVE BEEN SELECTED, AN EDGE WILL BE DRAWN BETWEEN THEM.
+		 */
+		
+		public void actionPerformed(ActionEvent e){
+			System.out.println("SAVING");
+			try {
+				save();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	public void save()throws IOException {
+		new File("src/current/saves/").mkdirs();
+		System.out.println("Type the save name");
+		String nameSave = getInput();
+		FileOutputStream fos = new FileOutputStream("src/current/saves/"+nameSave+".ser");
+	    ObjectOutputStream oos = new ObjectOutputStream(fos);
+	    oos.writeObject(theModel);
+	    oos.flush();
+	    oos.close();
+	}
+	
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
