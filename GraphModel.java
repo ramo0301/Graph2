@@ -1,17 +1,22 @@
-package current;
+package grapheditor;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 
 import javax.swing.AbstractAction;
 
-public class GraphModel extends Observable {
+public class GraphModel extends Observable implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<GraphVertex> vertexList = new ArrayList<GraphVertex>();
 	private ArrayList<GraphEdge> edgeList = new ArrayList<GraphEdge>();
 	
@@ -138,6 +143,16 @@ public class GraphModel extends Observable {
 		edgeList.remove(index);
 	}
 	
+	public void removeEdgeBetween(GraphVertex vertex1, GraphVertex vertex2){
+		for(GraphEdge edge : edgeList){
+			if( (edge.getConnected1() == vertex1 && edge.getConnected2() == vertex2)
+					|| (edge.getConnected1() == vertex2 && edge.getConnected2() == vertex1)){
+				removeEdge(edgeList.indexOf(edge));
+				break;
+			}
+		}
+	}
+	
 	
 	/* USED TO ACCESS THE ENTIRE LIST, WHICH PaintComponent IN GraphPanel USES.
 	 */
@@ -233,6 +248,12 @@ public class GraphModel extends Observable {
 			}
 		}
 		return -1;		//returned if none of the vertices contain the point
+	}
+	
+	
+	public void setUpdated(){
+		setChanged();
+		notifyObservers();
 	}
 	
 	
