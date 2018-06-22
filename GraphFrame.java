@@ -24,12 +24,16 @@ public class GraphFrame extends JFrame implements Observer {
 	private JMenuItem menuAddEdge;		//...be accessed by update (to dis/enable them)
 	private JMenuItem menuDeleteEdge;
 	
-	private GraphModel theModel = new GraphModel();
-	private GraphPanel thePanel = new GraphPanel(theModel);
+	private GraphModel theModel;
+	private GraphPanel thePanel;
 	
-	public GraphFrame(){
+	public GraphFrame(GraphModel theModel){
 		
 		super("Graph Frame");
+		
+		this.theModel = theModel;
+		this.thePanel = new GraphPanel(theModel);
+		
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout() );
@@ -78,7 +82,7 @@ public class GraphFrame extends JFrame implements Observer {
 	
 	public void newFrame(){
 		System.out.println("SUPPOSEDLY MAKING NEW FRAME");
-		GraphFrame copyFrame = new GraphFrame();
+		GraphFrame copyFrame = new GraphFrame(theModel);
 		copyFrame.setVisible(true);
 		
 	}

@@ -1,11 +1,12 @@
 package current;
 
-//VERSION 45
+//VERSION 46
 
 public class GraphEditor {
 
 	public static void main(String[] args){
-		GraphFrame theFrame = new GraphFrame();
+		GraphModel theModel = new GraphModel();
+		GraphFrame theFrame = new GraphFrame(theModel);
 		theFrame.setVisible(true);
 	}
 }
