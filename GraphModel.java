@@ -1,17 +1,22 @@
-package current;
+package grapheditor;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 
 import javax.swing.AbstractAction;
 
-public class GraphModel extends Observable {
+public class GraphModel extends Observable implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<GraphVertex> vertexList = new ArrayList<GraphVertex>();
 	private ArrayList<GraphEdge> edgeList = new ArrayList<GraphEdge>();
 	

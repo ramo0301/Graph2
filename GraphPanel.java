@@ -1,4 +1,4 @@
-package current;
+package grapheditor;
 
 import java.awt.BasicStroke;
 import java.util.Observable;

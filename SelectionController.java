@@ -1,4 +1,4 @@
-package current;
+package grapheditor;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
