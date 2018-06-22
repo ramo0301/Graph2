@@ -33,7 +33,7 @@ public class SelectionController extends Observable implements MouseListener, Mo
 			System.out.println("Making line to mouse");
 			theModel.makeLineToMouse(startX, startY, x, y);
 			
-			setEdge();	//if a vertex is already selected, it becomes one of the vertices that the edge connects.
+			setEdge();	//a vertex is already selected, and it becomes one of the vertices that the edge connects.
 			setChanged();
 			notifyObservers();
 		} else if(newSetting.equals("default")){
@@ -63,8 +63,8 @@ public class SelectionController extends Observable implements MouseListener, Mo
 			if(SwingUtilities.isRightMouseButton(e)){
 				System.out.println("RIGHT CLICK");
 				thePanel.setVertexNameEditable(true);
-				thePanel.setVertexName(theModel.getVertexAtIndex(vertexIndex).getName());
 			}
+			thePanel.setVertexName(theModel.getVertexAtIndex(vertexIndex).getName());
 			
 			theModel.setSelectedVertexIndex(vertexIndex);
 			
@@ -90,7 +90,7 @@ public class SelectionController extends Observable implements MouseListener, Mo
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		System.out.println("Mouse being dragged");
+		//System.out.println("Mouse being dragged");
 		vertexIndex = theModel.getSelectedVertexIndex();
 		if(vertexIndex != -1){				/*if, at the moment, a vertex is selected
 		* (as determined in mousePressed), then change the location of that vertex. Otherwise, do nothing.*/
@@ -109,10 +109,10 @@ public class SelectionController extends Observable implements MouseListener, Mo
 		if(setting.equals("edge")){	//if the mode is to draw an edge, call setEdge
 			theModel.setLineToMouse(e.getX(),e.getY());
 		}
-		
+
 	}
-	
-	
+
+
 	/* 	INVOKED IN mousePressed WHEN THE SETTING IS: "edge".
 	 *  SELECTS THE NEXT TWO VERTICES TO BE THE END OF THE EDGE, THEN SETS SETTING BACK TO DEFAULT 
 	 */
@@ -120,7 +120,7 @@ public class SelectionController extends Observable implements MouseListener, Mo
 		if(vertexIndex != -1){ 			//only do something if a vertex is selected.
 			if(vertex1 == null){		//vertex1 needs yet to be initialized
 				vertex1 = theModel.getVertexAtIndex(vertexIndex);
-			} else {					//vertex1 already initialized
+			} else if(theModel.getVertexAtIndex(vertexIndex)!=vertex1){
 				vertex2 = theModel.getVertexAtIndex(vertexIndex);
 				//now both vertex 1 and 2 are set, so we can add the edge.
 				theModel.addEdge(vertex1, vertex2);

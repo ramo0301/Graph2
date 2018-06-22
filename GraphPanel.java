@@ -72,7 +72,6 @@ public class GraphPanel extends JPanel implements ActionListener, Observer {
 	 * (I.E. A NEW VERTEX OR EDGE HAS BEEN ADDED TO THE MODEL), THAT THE CHANGES SHOW IN THE PANEL.
 	 */
 	public void update(Observable obj, Object arg ){
-		System.out.println("UPDATING GRAPH PANEL");
 		repaint();
 		if(theModel.getSelectedVertexIndex() == -1){
 			textField.setText("");
@@ -99,6 +98,7 @@ public class GraphPanel extends JPanel implements ActionListener, Observer {
 	public void actionPerformed(ActionEvent arg0) {
 		String text = textField.getText();
 		theModel.getVertexAtIndex(theModel.getSelectedVertexIndex()).setName(text); //set the name of the selected vertex
+		textField.setEditable(false);
 		repaint();
 		System.out.println(text);
 	}
