@@ -138,6 +138,16 @@ public class GraphModel extends Observable {
 		edgeList.remove(index);
 	}
 	
+	public void removeEdgeBetween(GraphVertex vertex1, GraphVertex vertex2){
+		for(GraphEdge edge : edgeList){
+			if( (edge.getConnected1() == vertex1 && edge.getConnected2() == vertex2)
+					|| (edge.getConnected1() == vertex2 && edge.getConnected2() == vertex1)){
+				removeEdge(edgeList.indexOf(edge));
+				break;
+			}
+		}
+	}
+	
 	
 	/* USED TO ACCESS THE ENTIRE LIST, WHICH PaintComponent IN GraphPanel USES.
 	 */
@@ -233,6 +243,12 @@ public class GraphModel extends Observable {
 			}
 		}
 		return -1;		//returned if none of the vertices contain the point
+	}
+	
+	
+	public void setUpdated(){
+		setChanged();
+		notifyObservers();
 	}
 	
 	

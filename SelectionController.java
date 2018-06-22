@@ -3,12 +3,11 @@ package current;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.Observable;
 import javax.swing.SwingUtilities;
 
-public class SelectionController extends Observable implements MouseListener, MouseMotionListener{
+public class SelectionController implements MouseListener, MouseMotionListener{
 	private GraphPanel thePanel = null;
-	private GraphModel theModel = null;		//might want to get rid of this, if possible elegantly/
+	private GraphModel theModel = null;		//might want to get rid of this, if possible elegantly
 	private GraphVertex vertex1 = null, vertex2 = null;
 	int x=-1, y=-1, vertexIndex = -1 ;
 	private String setting = "default";
@@ -21,7 +20,6 @@ public class SelectionController extends Observable implements MouseListener, Mo
 		this.theModel = inputModel;
 		thePanel.addMouseListener(this);
 		thePanel.addMouseMotionListener(this);
-		addObserver(thePanel);
 	}
 	
 	public void setSetting(String newSetting){
@@ -35,11 +33,12 @@ public class SelectionController extends Observable implements MouseListener, Mo
 			theModel.makeLineToMouse(startX, startY, x, y);
 			
 			setEdge();	//a vertex is already selected, and it becomes one of the vertices that the edge connects.
+		} else if(newSetting.equals("deleteEdge")){
+			deleteEdge();
 		} else if(newSetting.equals("default")){
 			theModel.disableLineToMouse();
 		}
-		setChanged();
-		notifyObservers();
+		theModel.setUpdated();
 	}
 	public void mouseClicked(MouseEvent e){
 		//System.out.println("Mouse clicked at " + e.getX() + "," + e.getY());
@@ -74,10 +73,12 @@ public class SelectionController extends Observable implements MouseListener, Mo
 			
 			if(setting.equals("edge")){	//if the mode is to draw an edge, call setEdge
 				setEdge();			
+			} else if(setting.equals("deleteEdge")){	//if the mode is to delete an edge, call deleteEdge
+				deleteEdge();			
 			}
 			
-			setChanged();
-			notifyObservers();
+			theModel.setUpdated();
+			
 		} else {									//if a a point that is not a vertex is pressed,
 			if(setting.equals("edge")){	
 				setSetting("default");				//but currently an edge is being drawn, it stops drawing it
@@ -107,8 +108,7 @@ public class SelectionController extends Observable implements MouseListener, Mo
 				System.out.println("MOUSEMOVED, " + vertexIndex);
 				theModel.setLineToMouse(x, y, e.getX(),e.getY());
 			}
-			setChanged();
-			notifyObservers();
+			theModel.setUpdated();
 		}
 
 	}
@@ -121,7 +121,7 @@ public class SelectionController extends Observable implements MouseListener, Mo
 			int newStartY = (int)theModel.getVertexAtIndex(theModel.getSelectedVertexIndex()).getY();
 			theModel.setLineToMouse(newStartX, newStartY, e.getX(),e.getY());
 		}
-
+		theModel.setUpdated();
 	}
 
 
@@ -136,6 +136,22 @@ public class SelectionController extends Observable implements MouseListener, Mo
 				vertex2 = theModel.getVertexAtIndex(vertexIndex);
 				//now both vertex 1 and 2 are set, so we can add the edge.
 				theModel.addEdge(vertex1, vertex2);
+				vertex1 = null; vertex2 = null;
+				setSetting("default");
+			} 
+		}
+
+	}
+	
+	private void deleteEdge(){
+		System.out.println("DELETING EDGE (SUPPOSEDLY)");
+		if(vertexIndex != -1){ 			//only do something if a vertex is selected.
+			if(vertex1 == null){		//vertex1 needs yet to be initialized
+				vertex1 = theModel.getVertexAtIndex(vertexIndex);
+			} else if(theModel.getVertexAtIndex(vertexIndex)!=vertex1){
+				vertex2 = theModel.getVertexAtIndex(vertexIndex);
+				//now both vertex 1 and 2 are set, so we can add the edge.
+				theModel.removeEdgeBetween(vertex1, vertex2);
 				vertex1 = null; vertex2 = null;
 				setSetting("default");
 			} 
